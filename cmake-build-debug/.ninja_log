@@ -1,0 +1,15 @@
+# ninja log v6
+3	199	7717240253895919	CMakeFiles/GraphProject.dir/algorithms/mst/kruskal.cpp.obj	f929bdbacf29872f
+14	213	7717240254002288	CMakeFiles/GraphProject.dir/algorithms/sp/bellman_ford.cpp.obj	752ac9f3e66de1ac
+11	218	7717240253962312	CMakeFiles/GraphProject.dir/algorithms/mst/prim.cpp.obj	9d25585020761672
+38	224	7717240254231894	CMakeFiles/GraphProject.dir/io/display.cpp.obj	21d128bc9657b06d
+23	268	7717240254088283	CMakeFiles/GraphProject.dir/config/configuration.cpp.obj	45720b41b90567e
+28	273	7717240254139254	CMakeFiles/GraphProject.dir/graph/generators.cpp.obj	309eba0d3a201098
+33	274	7717240254190343	CMakeFiles/GraphProject.dir/graph/graph.cpp.obj	87f5ecc0e85758da
+43	291	7717240254291893	CMakeFiles/GraphProject.dir/io/file_io.cpp.obj	22fad0e4f7970a01
+213	332	7717240255982227	CMakeFiles/GraphProject.dir/utils/random.cpp.obj	8d35848d5642a7e8
+207	356	7717240255932318	CMakeFiles/GraphProject.dir/utils/min_heap.cpp.obj	5ad2d13762e85e80
+48	529	7717240254333415	CMakeFiles/GraphProject.dir/main.cpp.obj	3db9db8f95ee1550
+19	1541	7717240254043088	CMakeFiles/GraphProject.dir/algorithms/sp/dijkstra.cpp.obj	bada64b8dd0218e2
+219	1618	7717240256043305	CMakeFiles/GraphProject.dir/utils/timer.cpp.obj	e935b67a810a1fb7
+1618	1741	7717240270036746	GraphProject.exe	fb16071158f01e4d
