@@ -4,12 +4,13 @@ project(GraphProject)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Все исходные файлы
+# Собираем все исходные файлы
 file(GLOB SOURCES
         "*.cpp"
-        "graph/*.cpp"
         "algorithms/*/*.cpp"
+        "graph/*.cpp"
         "io/*.cpp"
+        "config/*.cpp"
         "utils/*.cpp"
 )
 

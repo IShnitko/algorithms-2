@@ -73,6 +73,12 @@ build CMakeFiles/GraphProject.dir/algorithms/sp/dijkstra.cpp.obj: CXX_COMPILER__
   OBJECT_DIR = CMakeFiles\GraphProject.dir
   OBJECT_FILE_DIR = CMakeFiles\GraphProject.dir\algorithms\sp
 
+build CMakeFiles/GraphProject.dir/config/configuration.cpp.obj: CXX_COMPILER__GraphProject_unscanned_Debug C$:/Users/ilysh/dev_cpp/algorithms-2/config/configuration.cpp || cmake_object_order_depends_target_GraphProject
+  DEP_FILE = CMakeFiles\GraphProject.dir\config\configuration.cpp.obj.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\GraphProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\GraphProject.dir\config
+
 build CMakeFiles/GraphProject.dir/graph/generators.cpp.obj: CXX_COMPILER__GraphProject_unscanned_Debug C$:/Users/ilysh/dev_cpp/algorithms-2/graph/generators.cpp || cmake_object_order_depends_target_GraphProject
   DEP_FILE = CMakeFiles\GraphProject.dir\graph\generators.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
@@ -123,7 +129,7 @@ build CMakeFiles/GraphProject.dir/utils/timer.cpp.obj: CXX_COMPILER__GraphProjec
 #############################################
 # Link the executable GraphProject.exe
 
-build GraphProject.exe: CXX_EXECUTABLE_LINKER__GraphProject_Debug CMakeFiles/GraphProject.dir/algorithms/mst/kruskal.cpp.obj CMakeFiles/GraphProject.dir/algorithms/mst/prim.cpp.obj CMakeFiles/GraphProject.dir/algorithms/sp/bellman_ford.cpp.obj CMakeFiles/GraphProject.dir/algorithms/sp/dijkstra.cpp.obj CMakeFiles/GraphProject.dir/graph/generators.cpp.obj CMakeFiles/GraphProject.dir/graph/graph.cpp.obj CMakeFiles/GraphProject.dir/io/display.cpp.obj CMakeFiles/GraphProject.dir/io/file_io.cpp.obj CMakeFiles/GraphProject.dir/main.cpp.obj CMakeFiles/GraphProject.dir/utils/random.cpp.obj CMakeFiles/GraphProject.dir/utils/timer.cpp.obj
+build GraphProject.exe: CXX_EXECUTABLE_LINKER__GraphProject_Debug CMakeFiles/GraphProject.dir/algorithms/mst/kruskal.cpp.obj CMakeFiles/GraphProject.dir/algorithms/mst/prim.cpp.obj CMakeFiles/GraphProject.dir/algorithms/sp/bellman_ford.cpp.obj CMakeFiles/GraphProject.dir/algorithms/sp/dijkstra.cpp.obj CMakeFiles/GraphProject.dir/config/configuration.cpp.obj CMakeFiles/GraphProject.dir/graph/generators.cpp.obj CMakeFiles/GraphProject.dir/graph/graph.cpp.obj CMakeFiles/GraphProject.dir/io/display.cpp.obj CMakeFiles/GraphProject.dir/io/file_io.cpp.obj CMakeFiles/GraphProject.dir/main.cpp.obj CMakeFiles/GraphProject.dir/utils/random.cpp.obj CMakeFiles/GraphProject.dir/utils/timer.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lole32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\GraphProject.dir

@@ -1,0 +1,6 @@
+.alg_type dijkstra_list
+.num_v 5
+.density 0.7
+.start_vertex 0
+.out_matrix true
+.out_list true
