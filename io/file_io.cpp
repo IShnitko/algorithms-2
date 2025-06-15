@@ -173,8 +173,8 @@ void run_config_file_var(File_config *cfg_file, Config *cfg) {
             break;
     }
 
-    // Выводим результаты
     printf("Results for %s:\n", alg_names[cfg_file->alg_type]);
+    printf("Execution time: %.6f ms\n", cfg->execution_time); // Добавлено
 
     // Вывод результатов в зависимости от типа алгоритма
     if (cfg->res_sp) {

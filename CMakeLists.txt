@@ -7,11 +7,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Собираем все исходные файлы
 file(GLOB SOURCES
         "*.cpp"
-        "algorithms/*/*.cpp"
+        "config/*.cpp"
         "graph/*.cpp"
         "io/*.cpp"
-        "config/*.cpp"
         "utils/*.cpp"
+        "algorithms/sp/*.cpp"   # Добавлено
+        "algorithms/mst/*.cpp"  # Добавлено
 )
 
 # Создаем исполняемый файл

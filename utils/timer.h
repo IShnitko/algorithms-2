@@ -8,19 +8,9 @@ class Timer {
     LARGE_INTEGER frequency;
 
 public:
-    Timer() {
-        QueryPerformanceFrequency(&frequency);
-    }
-
-    void start() {
-        QueryPerformanceCounter(&start_time);
-    }
-
-    double stop() {
-        LARGE_INTEGER end_time;
-        QueryPerformanceCounter(&end_time);
-        return (end_time.QuadPart - start_time.QuadPart) * 1000.0 / frequency.QuadPart;
-    }
+    Timer();
+    void start();
+    double stop(); // Returns milliseconds
 };
 
 #endif // TIMER_H

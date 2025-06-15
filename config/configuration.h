@@ -66,6 +66,7 @@ typedef struct Config {
     Res_prim* res_prim;
     Res_kruskal* res_kruskal;
     enum Alg_type alg_type;
+    double execution_time; // Добавлено поле для времени выполнения
 } Config;
 
 // Конфигурация файла
