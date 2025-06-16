@@ -9,16 +9,32 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <direct.h>
+#include <string>
 
 #define BREAK_LINE "--------------------------------\n"
 #define SECTION_LINE "================================\n"
 
-// Загрузка ориентированного графа
+
 static void load_dir_graph(const char *file_name, Config *cfg) {
     FILE *file = fopen(file_name, "r");
     if (!file) {
-        fprintf(stderr, "Error opening file %s\n", file_name);
-        exit(1);
+        // Попробуем найти файл в родительской директории
+        std::string parent_path = "../" + std::string(file_name);
+        file = fopen(parent_path.c_str(), "r");
+
+        if (!file) {
+            char cwd[1024];
+            if (getcwd(cwd, sizeof(cwd))) {
+                fprintf(stderr, "Error opening file %s\n", file_name);
+                fprintf(stderr, "Current working directory: %s\n", cwd);
+                fprintf(stderr, "Also tried: %s\n", parent_path.c_str());
+            } else {
+                fprintf(stderr, "Error opening file %s (and ../%s)\n",
+                        file_name, file_name);
+            }
+            exit(1);
+        }
     }
 
     U32f num_v, num_e;

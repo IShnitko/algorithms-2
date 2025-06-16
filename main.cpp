@@ -21,6 +21,7 @@ bool file_exists(const char* filename) {
 }
 
 int main(int argc, char* argv[]) {
+
     if (argc != 2) {
         printf("Usage: %s <config_file>\n", argv[0]);
         return 1;

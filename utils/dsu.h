@@ -1,6 +1,7 @@
 #ifndef DSU_H
 #define DSU_H
 
+#include <cstdint>
 #include <cstdlib>
 
 typedef uint_fast32_t U32f;
