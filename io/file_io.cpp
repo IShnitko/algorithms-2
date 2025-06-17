@@ -11,6 +11,7 @@
 #include <cstring>
 #include <direct.h>
 #include <string>
+#include "../utils/timer.h"
 
 #define BREAK_LINE "--------------------------------\n"
 #define SECTION_LINE "================================\n"
@@ -342,8 +343,8 @@ void run_config_file_var(File_config *cfg_file, Config *cfg) {
 
 // Запуск с графом из файла
 void run_config_file_load(File_config *cfg_file, Config *cfg) {
-    printf("Loading graph from file and running algorithm\n");
-    printf("--------------------------------\n");
+    printf("2. Load graph from file and run algorithm\n");
+    printf(BREAK_LINE);
 
     if (!cfg_file->file_name) {
         fprintf(stderr, "No input file specified\n");
@@ -361,19 +362,59 @@ void run_config_file_load(File_config *cfg_file, Config *cfg) {
 
     load_graph_from_file(cfg_file->file_name, cfg, directed);
 
-    // Просто запускаем алгоритм без лишних преобразований
+    if (!cfg->graph) {
+        printf("Error loading graph from %s\n", cfg_file->file_name);
+        return;
+    }
+
+    // Создаем необходимые представления графа
+    create_config_from_graph(cfg, cfg_file->alg_type, cfg->num_v, cfg->density);
+    print_graph_representation(cfg, cfg_file);
+    free_unused_config(cfg, cfg->alg_type);
+
+    Timer timer; // Для замера времени выполнения
+
+    // Выбираем и выполняем алгоритм
     switch (cfg_file->alg_type) {
         case DIJKSTRA_LIST:
             dijkstra_list(cfg);
-        break;
-        // Добавьте обработку других алгоритмов по аналогии
+            break;
+        case DIJKSTRA_MATRIX:
+            dijkstra_matrix(cfg);
+            break;
+        case BELMAN_FORD_LIST:
+            bellman_ford_list(cfg);
+            break;
+        case BELMAN_FORD_MATRIX_EDGE_LIST:
+            bellman_ford_matrix_edge_list(cfg);
+            break;
+        case BELMAN_FORD_MATRIX_NO_EDGE_LIST:
+            bellman_ford_matrix_no_edge_list(cfg);
+            break;
+        case PRIM_LIST:
+            prim_list(cfg);
+            break;
+        case PRIM_MATRIX:
+            prim_matrix(cfg);
+            break;
+        case KRUSKAL_LIST:
+            kruskal_list(cfg);
+            break;
+        case KRUSKAL_MATRIX:
+            kruskal_matrix(cfg);
+            break;
         default:
-            fprintf(stderr, "Unsupported algorithm for file input\n");
-        break;
+            fprintf(stderr, "Unknown algorithm type\n");
+            break;
     }
 
+    // cfg->execution_time = timer.elapsed(); // Сохраняем время выполнения
+
     // Вывод результатов
-    printf("\nResults for %s:\n", alg_names[cfg_file->alg_type]);
+    printf("Results for %s:\n", alg_names[cfg_file->alg_type]);
+    printf("Execution time: %.6f ms\n", cfg->execution_time);
+
+    // Вывод кратчайших путей
     if (cfg->res_sp) {
         printf("Distances from vertex %u:\n", cfg->start_vertex);
         for (U32f i = 0; i < cfg->num_v; i++) {
@@ -388,5 +429,36 @@ void run_config_file_load(File_config *cfg_file, Config *cfg) {
         }
     }
 
-    printf("================================\n");
+    // Вывод MST для Прима
+    if (cfg->res_prim) {
+        printf("MST (Prim) edges:\n");
+        U32f total_weight = 0;
+        for (U32f i = 0; i < cfg->num_v; i++) {
+            if (i == cfg->start_vertex) continue;
+            if (cfg->res_prim->parent_weight[i].parent != UINT32_MAX) {
+                printf("  %u - %u (weight: %u)\n",
+                       cfg->res_prim->parent_weight[i].parent,
+                       i,
+                       cfg->res_prim->parent_weight[i].weight);
+                total_weight += cfg->res_prim->parent_weight[i].weight;
+            }
+        }
+        printf("Total MST weight: %u\n", total_weight);
+    }
+
+    // Вывод MST для Крускала
+    if (cfg->res_kruskal) {
+        printf("MST (Kruskal) edges:\n");
+        U32f total_weight = 0;
+        for (U32f i = 0; i < cfg->res_kruskal->num_edges; i++) {
+            printf("  %u - %u (weight: %u)\n",
+                   cfg->res_kruskal->edges[i].u,
+                   cfg->res_kruskal->edges[i].v,
+                   cfg->res_kruskal->edges[i].weight);
+            total_weight += cfg->res_kruskal->edges[i].weight;
+        }
+        printf("Total MST weight: %u\n", total_weight);
+    }
+
+    printf(SECTION_LINE);
 }

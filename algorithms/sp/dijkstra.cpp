@@ -83,74 +83,63 @@ void dijkstra_list(Config *cfg) {
     // Освобождаем кучу
     free_min_heap(heap);
 }
-void dijkstra_matrix(Config* cfg) {
-    U32f num_v = cfg->num_v;
-    U32f density = cfg->density;
-    U32f start_vertex = cfg->start_vertex;
-    I32f* inc_matrix = cfg->inc_matrix_dir;
+void dijkstra_matrix(Config *cfg) {
+    if (!cfg || !cfg->inc_matrix_dir) return;
 
-    // Инициализация результатов
-    cfg->res_sp = (Res_sp*)malloc(sizeof(Res_sp));
-    cfg->res_sp->distances = (U32f*)malloc(num_v * sizeof(U32f));
-    cfg->res_sp->parents = (U32f*)malloc(num_v * sizeof(U32f));
+    const U32f n = cfg->num_v;
+    const U32f m = cfg->density;
+    const U32f start = cfg->start_vertex;
 
-    // Инициализация массивов
-    for (U32f i = 0; i < num_v; i++) {
-        cfg->res_sp->distances[i] = UINT32_MAX;
-        cfg->res_sp->parents[i] = UINT32_MAX;
+    // Инициализация расстояний
+    U32f* dist = (U32f*)malloc(n * sizeof(U32f));
+    U32f* prev = (U32f*)malloc(n * sizeof(U32f));
+    bool* visited = (bool*)calloc(n, sizeof(bool));
+
+    for (U32f i = 0; i < n; i++) {
+        dist[i] = UINT_MAX;
+        prev[i] = UINT32_MAX;
     }
-    cfg->res_sp->distances[start_vertex] = 0;
+    dist[start] = 0;
 
-    // Создание и инициализация минимальной кучи
-    MinHeap* heap = create_min_heap(num_v);
-    min_heap_insert(heap, start_vertex, 0);
+    // Основной цикл
+    for (U32f count = 0; count < n - 1; count++) {
+        // Находим вершину с минимальным расстоянием
+        U32f u = UINT32_MAX;
+        U32f min_dist = UINT_MAX;
+        for (U32f i = 0; i < n; i++) {
+            if (!visited[i] && dist[i] < min_dist) {
+                min_dist = dist[i];
+                u = i;
+            }
+        }
 
-    // Замер времени выполнения
-    Timer timer;
-    timer.start();
+        if (u == UINT32_MAX) break;
+        visited[u] = true;
 
-    // Основной алгоритм
-    while (!min_heap_is_empty(heap)) {
-        HeapItem min_item = min_heap_extract_min(heap);
-        U32f u = min_item.vertex;
+        // Обновляем расстояния до соседей
+        for (U32f v = 0; v < n; v++) {
+            if (visited[v]) continue;
 
-        // Перебор рёбер через матрицу инцидентности
-        for (U32f j = 0; j < density; j++) {
-            I32f val = inc_matrix[u * density + j];
-            if (val < 0) { // Исходящее ребро
-                U32f weight = -val;
+            // Ищем ребро u->v в матрице
+            for (U32f e = 0; e < m; e++) {
+                if (cfg->inc_matrix_dir[u * m + e] > 0 &&
+                    cfg->inc_matrix_dir[v * m + e] < 0) {
 
-                // Поиск конечной вершины
-                for (U32f v = 0; v < num_v; v++) {
-                    if (v == u) continue;
-                    if (inc_matrix[v * density + j] > 0) {
-                        // Проверка на переполнение
-                        if (cfg->res_sp->distances[u] > UINT32_MAX - weight) {
-                            break;
-                        }
+                    U32f weight = cfg->inc_matrix_dir[u * m + e];
+                    U32f new_dist = dist[u] + weight;
 
-                        U32f alt = cfg->res_sp->distances[u] + weight;
-
-                        if (alt < cfg->res_sp->distances[v]) {
-                            cfg->res_sp->distances[v] = alt;
-                            cfg->res_sp->parents[v] = u;
-
-                            if (heap->indices[v] != UINT32_MAX) {
-                                min_heap_decrease_key(heap, v, alt);
-                            } else {
-                                min_heap_insert(heap, v, alt);
-                            }
-                        }
-                        break;
+                    if (new_dist < dist[v]) {
+                        dist[v] = new_dist;
+                        prev[v] = u;
                     }
-                }
+                    }
             }
         }
     }
 
-    // Фиксация времени выполнения
-    cfg->execution_time = timer.stop();
-
-    // Освобождение ресурсов
-    free_min_heap(heap);
+    // Сохраняем результаты
+    if (!cfg->res_sp) cfg->res_sp = (Res_sp*)malloc(sizeof(Res_sp));
+    cfg->res_sp->distances = dist;
+    cfg->res_sp->parents = prev;
+    free(visited);
 }

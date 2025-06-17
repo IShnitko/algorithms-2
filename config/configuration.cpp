@@ -112,18 +112,29 @@ void read_config_file(const char* file_name, File_config* cfg) {
     cfg->start_vertex = 0;
     cfg->out_list = false;
     cfg->out_matrix = false;
+    cfg->num_v = 0;
+    cfg->density = 0.0;
 
     char line[256];
     while (fgets(line, sizeof(line), file)) {
-        // Пропускаем пустые строки и комментарии
-        if (line[0] == '\n' || line[0] == '#') continue;
+        // Пропускаем комментарии и пустые строки
+        if (line[0] == '#' || line[0] == '\n') continue;
 
         char key[128], value[128];
         if (sscanf(line, "%127s %127s", key, value) != 2) continue;
 
         if (strcmp(key, ".alg_type") == 0) {
+            // Добавляем обработку всех алгоритмов
             if (strcmp(value, "dijkstra_list") == 0) cfg->alg_type = DIJKSTRA_LIST;
-            // Добавьте другие алгоритмы по необходимости
+            else if (strcmp(value, "dijkstra_matrix") == 0) cfg->alg_type = DIJKSTRA_MATRIX;
+            else if (strcmp(value, "belman_ford_list") == 0) cfg->alg_type = BELMAN_FORD_LIST;
+            else if (strcmp(value, "belman_ford_matrix_edge_list") == 0) cfg->alg_type = BELMAN_FORD_MATRIX_EDGE_LIST;
+            else if (strcmp(value, "belman_ford_matrix_no_edge_list") == 0) cfg->alg_type = BELMAN_FORD_MATRIX_NO_EDGE_LIST;
+            else if (strcmp(value, "prim_list") == 0) cfg->alg_type = PRIM_LIST;
+            else if (strcmp(value, "prim_matrix") == 0) cfg->alg_type = PRIM_MATRIX;
+            else if (strcmp(value, "kruskal_list") == 0) cfg->alg_type = KRUSKAL_LIST;
+            else if (strcmp(value, "kruskal_matrix") == 0) cfg->alg_type = KRUSKAL_MATRIX;
+            else fprintf(stderr, "Unknown algorithm type: %s\n", value);
         }
         else if (strcmp(key, ".file_name") == 0) {
             cfg->file_name = strdup(value);
@@ -137,8 +148,13 @@ void read_config_file(const char* file_name, File_config* cfg) {
         else if (strcmp(key, ".out_matrix") == 0) {
             cfg->out_matrix = (strcmp(value, "true") == 0);
         }
+        else if (strcmp(key, ".num_v") == 0) {
+            cfg->num_v = atoi(value);
+        }
+        else if (strcmp(key, ".density") == 0) {
+            cfg->density = atof(value);
+        }
     }
-
     fclose(file);
 }
 

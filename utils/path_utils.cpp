@@ -45,3 +45,13 @@ std::string resolve_path(const std::string& path) {
     std::cerr << "Warning: File not found at any location: " << path << std::endl;
     return path;
 }
+void print_path(const uint_fast32_t* parents, uint_fast32_t start, uint_fast32_t end) {
+    if (end == start) {
+        printf("%u", start);
+    } else if (parents[end] == UINT32_MAX) {
+        printf("No path from %u to %u", start, end);
+    } else {
+        print_path(parents, start, parents[end]);
+        printf(" -> %u", end);
+    }
+}

@@ -1,5 +1,8 @@
 #include "generators.h"
 #include "graph.h"
+#include "../utils/dsu.h"
+#include "../utils/random.h"
+#include <vector>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -231,4 +234,52 @@ I32f *create_inc_dir_matrix(Graph* graph, U32f density) {
         }
     }
     return inc_matrix;
+}
+
+Graph* generate_connected_graph(U32f vertices, double density, bool directed) {
+    if (vertices == 0) return nullptr;
+
+    // Рассчитываем количество рёбер
+    U32f max_edges = directed ? vertices * (vertices - 1) : vertices * (vertices - 1) / 2;
+    U32f min_edges = vertices - 1;  // Минимум для связности
+    U32f target_edges = min_edges + static_cast<U32f>((max_edges - min_edges) * density);
+
+    Graph* graph = create_graph(vertices);
+    if (!graph) return nullptr;
+
+    // Шаг 1: Создаем связный граф (остовное дерево)
+    DSU dsu(vertices);
+    U32f edges_added = 0;
+
+    while (edges_added < min_edges) {
+        U32f u = rand_range(0, vertices-1);
+        U32f v = rand_range(0, vertices-1);
+
+        if (u != v && dsu.find(u) != dsu.find(v)) {
+            U32f weight = rand_range(1, 100);
+            add_edge(graph, u, v, weight);
+            if (!directed) {
+                add_edge(graph, v, u, weight);
+            }
+            dsu.unite(u, v);
+            edges_added++;
+        }
+    }
+
+    // Шаг 2: Добавляем оставшиеся рёбра до нужной плотности
+    while (edges_added < target_edges) {
+        U32f u = rand_range(0, vertices-1);
+        U32f v = rand_range(0, vertices-1);
+
+        if (u != v && !check_edge(graph, u, v)) {
+            U32f weight = rand_range(1, 100);
+            add_edge(graph, u, v, weight);
+            if (!directed) {
+                add_edge(graph, v, u, weight);
+            }
+            edges_added++;
+        }
+    }
+
+    return graph;
 }

@@ -9,7 +9,7 @@ class Timer {
 
 public:
     Timer();
-    void start();
+    void start();\
     double stop(); // Returns milliseconds
 };
 
