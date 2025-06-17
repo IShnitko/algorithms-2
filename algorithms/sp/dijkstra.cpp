@@ -6,60 +6,81 @@
 #include <climits>
 #include <cstdio>
 
-void dijkstra_list(Config* cfg) {
-    U32f num_v = cfg->num_v;
-    U32f start_vertex = cfg->start_vertex;
+#include "dijkstra.h"
+#include "../../utils/min_heap.h"
+#include <cstdio>
+#include <climits>
 
-    // Initialize results
-    cfg->res_sp = (Res_sp*)malloc(sizeof(Res_sp));
-    cfg->res_sp->distances = (U32f*)malloc(num_v * sizeof(U32f));
-    cfg->res_sp->parents = (U32f*)malloc(num_v * sizeof(U32f));
-
-    // Initialize arrays
-    for (U32f i = 0; i < num_v; i++) {
-        cfg->res_sp->distances[i] = UINT32_MAX;
-        cfg->res_sp->parents[i] = UINT32_MAX;
+void dijkstra_list(Config *cfg) {
+    if (!cfg || !cfg->graph) {
+        fprintf(stderr, "Invalid configuration for Dijkstra\n");
+        return;
     }
-    cfg->res_sp->distances[start_vertex] = 0;
 
-    // Create and initialize min-heap
-    MinHeap* heap = create_min_heap(num_v);
-    min_heap_insert(heap, start_vertex, 0);
+    const U32f n = cfg->graph->num_v;
+    const U32f start = cfg->start_vertex;
 
-    // Timer start
-    Timer timer;
-    timer.start();
+    // Проверка корректности стартовой вершины
+    if (start >= n) {
+        fprintf(stderr, "Start vertex %u is out of range [0, %u]\n", start, n-1);
+        return;
+    }
 
-    // Main algorithm
+    // Выделяем память для результатов
+    if (!cfg->res_sp) {
+        cfg->res_sp = (Res_sp*)malloc(sizeof(Res_sp));
+        cfg->res_sp->distances = (U32f*)malloc(n * sizeof(U32f));
+        cfg->res_sp->parents = (U32f*)malloc(n * sizeof(U32f));
+    }
+
+    // Инициализация
+    for (U32f i = 0; i < n; i++) {
+        cfg->res_sp->distances[i] = UINT_MAX;
+        cfg->res_sp->parents[i] = UINT32_MAX; // Используем MAX для "не определено"
+    }
+    cfg->res_sp->distances[start] = 0;
+
+    // Создаем min-heap
+    MinHeap* heap = create_min_heap(n);
+    min_heap_insert(heap, start, 0);
+
+    // Основной цикл
     while (!min_heap_is_empty(heap)) {
-        HeapItem min_item = min_heap_extract_min(heap);
-        U32f u = min_item.vertex;
+        HeapItem item = min_heap_extract_min(heap);
+        U32f u = item.vertex;
 
-        // Explore neighbors
-        Node* node = cfg->graph->adjLists[u];
-        while (node != nullptr) {
-            U32f v = node->vertex;
-            U32f weight = node->weight;
-            U32f alt = cfg->res_sp->distances[u] + weight;
+        // Перебираем соседей
+        Node* neighbor = cfg->graph->adjLists[u];
+        while (neighbor != nullptr) {
+            U32f v = neighbor->vertex;
+            U32f weight = neighbor->weight;
 
-            if (alt < cfg->res_sp->distances[v]) {
-                cfg->res_sp->distances[v] = alt;
+            // Проверка на переполнение
+            if (cfg->res_sp->distances[u] > UINT_MAX - weight) {
+                neighbor = neighbor->next;
+                continue;
+            }
+
+            U32f new_dist = cfg->res_sp->distances[u] + weight;
+
+            if (new_dist < cfg->res_sp->distances[v]) {
+                cfg->res_sp->distances[v] = new_dist;
                 cfg->res_sp->parents[v] = u;
 
                 if (heap->indices[v] != UINT32_MAX) {
-                    min_heap_decrease_key(heap, v, alt);
+                    // Вершина уже в куче - уменьшаем ключ
+                    min_heap_decrease_key(heap, v, new_dist);
                 } else {
-                    min_heap_insert(heap, v, alt);
+                    // Вершины нет в куче - добавляем
+                    min_heap_insert(heap, v, new_dist);
                 }
             }
-            node = node->next;
+
+            neighbor = neighbor->next;
         }
     }
 
-    // Timer stop and save
-    cfg->execution_time = timer.stop();
-
-    // Cleanup
+    // Освобождаем кучу
     free_min_heap(heap);
 }
 void dijkstra_matrix(Config* cfg) {

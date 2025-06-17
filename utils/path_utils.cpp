@@ -1,6 +1,7 @@
 #include "path_utils.h"
 #include <windows.h>
 #include <filesystem>
+#include <iostream>
 
 std::string get_executable_dir() {
     char buffer[MAX_PATH];
@@ -12,22 +13,35 @@ std::string get_executable_dir() {
 
 std::string resolve_path(const std::string& path) {
     if (path.empty()) return path;
-
-    // Если путь абсолютный
+    
+    // Проверка абсолютного пути
     if (path.size() > 1 && path[1] == ':') return path;
-
+    
     // Проверка относительно текущей директории
     if (std::filesystem::exists(path)) return path;
-
-    // Проверка относительно директории исполняемого файла
+    
+    // Поиск в ../config/ относительно директории исполняемого файла
     std::string exe_dir = get_executable_dir();
     if (!exe_dir.empty()) {
-        std::string exe_path = exe_dir + "\\" + path;
-        if (std::filesystem::exists(exe_path)) return exe_path;
-
+        // ../config/file_name
+        std::string config_path = exe_dir + "\\..\\config\\" + path;
+        if (std::filesystem::exists(config_path)) {
+            return config_path;
+        }
+        
+        // ../file_name
         std::string parent_path = exe_dir + "\\..\\" + path;
-        if (std::filesystem::exists(parent_path)) return parent_path;
+        if (std::filesystem::exists(parent_path)) {
+            return parent_path;
+        }
+        
+        // Прямо в директории исполняемого файла
+        std::string exe_path = exe_dir + "\\" + path;
+        if (std::filesystem::exists(exe_path)) {
+            return exe_path;
+        }
     }
-
+    
+    std::cerr << "Warning: File not found at any location: " << path << std::endl;
     return path;
 }

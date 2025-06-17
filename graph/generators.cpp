@@ -185,6 +185,8 @@ void create_rand_dir_graph(Graph *graph, I32f density, U32f start_vertex) {
 }
 
 U32f *create_inc_undir_matrix(Graph* graph, U32f density) {
+
+    printf("Creating undirected incidence matrix: vertices=%u, density=%u\n", graph->num_v, density);
     U32f *inc_matrix = (U32f *)calloc(graph->num_v * density, sizeof(U32f));
     if (!inc_matrix) {
         fprintf(stderr, "Memory allocation failed for incidence matrix\n");
@@ -208,6 +210,7 @@ U32f *create_inc_undir_matrix(Graph* graph, U32f density) {
 }
 
 I32f *create_inc_dir_matrix(Graph* graph, U32f density) {
+    printf("Creating directed incidence matrix: vertices=%u, density=%u\n", graph->num_v, density);
     I32f *inc_matrix = (I32f *)calloc(graph->num_v * density, sizeof(I32f));
     if (!inc_matrix) {
         fprintf(stderr, "Memory allocation failed for incidence matrix\n");

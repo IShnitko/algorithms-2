@@ -16,31 +16,33 @@
 #define SECTION_LINE "================================\n"
 
 
-static void load_dir_graph(const char *file_name, Config *cfg) {
-    FILE *file = fopen(file_name, "r");
-    if (!file) {
-        // Попробуем найти файл в родительской директории
-        std::string parent_path = "../" + std::string(file_name);
-        file = fopen(parent_path.c_str(), "r");
+#include <filesystem>
+#include "../utils/path_utils.h"
 
-        if (!file) {
-            char cwd[1024];
-            if (getcwd(cwd, sizeof(cwd))) {
-                fprintf(stderr, "Error opening file %s\n", file_name);
-                fprintf(stderr, "Current working directory: %s\n", cwd);
-                fprintf(stderr, "Also tried: %s\n", parent_path.c_str());
-            } else {
-                fprintf(stderr, "Error opening file %s (and ../%s)\n",
-                        file_name, file_name);
-            }
-            exit(1);
-        }
+// Универсальная функция загрузки графа
+static void load_graph_file(const char *file_name, Config *cfg, bool directed) {
+    std::string resolved_path = resolve_path(file_name);
+    printf("Loading graph from: %s\n", resolved_path.c_str());
+
+    FILE *file = fopen(resolved_path.c_str(), "r");
+    if (!file) {
+        fprintf(stderr, "Error opening file: %s\n", resolved_path.c_str());
+        perror("fopen");
+        exit(1);
     }
 
     U32f num_v, num_e;
     if (fscanf(file, "%" SCNuFAST32 " %" SCNuFAST32, &num_v, &num_e) != 2) {
+        fprintf(stderr, "Invalid file format: missing vertex/edge count\n");
         fclose(file);
-        fprintf(stderr, "Invalid file format\n");
+        exit(1);
+    }
+
+    printf("Graph info: vertices=%u, edges=%u\n", num_v, num_e);
+
+    if (num_v == 0) {
+        fprintf(stderr, "Error: Graph must have at least 1 vertex\n");
+        fclose(file);
         exit(1);
     }
 
@@ -49,23 +51,139 @@ static void load_dir_graph(const char *file_name, Config *cfg) {
     cfg->graph = create_graph(num_v);
 
     if (!cfg->graph) {
+        fprintf(stderr, "Failed to create graph structure\n");
         fclose(file);
-        fprintf(stderr, "Failed to create graph\n");
         exit(1);
     }
 
     U32f src, dst, weight;
+    U32f edge_count = 0;
+
     while (fscanf(file, "%" SCNuFAST32 " %" SCNuFAST32 " %" SCNuFAST32, &src, &dst, &weight) == 3) {
         if (src >= num_v || dst >= num_v) {
-            fprintf(stderr, "Invalid vertex index: %u->%u\n", src, dst);
+            fprintf(stderr, "Warning: Skipping invalid edge %u->%u (max vertex %u)\n",
+                    src, dst, num_v-1);
             continue;
         }
+
         add_edge(cfg->graph, src, dst, weight);
+        if (!directed) {
+            add_edge(cfg->graph, dst, src, weight);
+        }
+        edge_count++;
+    }
+
+    fclose(file);
+
+    printf("Successfully loaded %u edges\n", edge_count);
+    if (edge_count != num_e) {
+        fprintf(stderr, "Warning: Expected %u edges, loaded %u\n", num_e, edge_count);
+    }
+}
+
+static void load_simple_graph(const char *file_name, Graph** graph, bool directed) {
+    FILE *file = fopen(file_name, "r");
+    if (!file) {
+        perror("fopen failed");
+        exit(1);
+    }
+
+    U32f num_v, num_e;
+    if (fscanf(file, "%" SCNuFAST32 " %" SCNuFAST32, &num_v, &num_e) != 2) {
+        fclose(file);
+        fprintf(stderr, "Invalid graph file format\n");
+        exit(1);
+    }
+
+    *graph = create_graph(num_v);
+    if (!*graph) {
+        fclose(file);
+        fprintf(stderr, "Graph creation failed\n");
+        exit(1);
+    }
+
+    U32f src, dst, weight;
+    for (U32f i = 0; i < num_e; i++) {
+        if (fscanf(file, "%" SCNuFAST32 " %" SCNuFAST32 " %" SCNuFAST32, &src, &dst, &weight) != 3) {
+            fprintf(stderr, "Error reading edge %u\n", i);
+            continue;
+        }
+
+        if (src >= num_v || dst >= num_v) {
+            fprintf(stderr, "Invalid edge: %u -> %u (max vertex %u)\n", src, dst, num_v-1);
+            continue;
+        }
+
+        add_edge(*graph, src, dst, weight);
+        if (!directed) {
+            add_edge(*graph, dst, src, weight);
+        }
     }
 
     fclose(file);
 }
 
+// Обновленная функция загрузки
+void load_graph_from_file(const char *file_name, Config *cfg, bool directed) {
+    std::string resolved_path = resolve_path(file_name);
+    printf("Loading graph from: %s\n", resolved_path.c_str());
+
+    FILE *file = fopen(resolved_path.c_str(), "r");
+    if (!file) {
+        fprintf(stderr, "Error opening file: %s\n", resolved_path.c_str());
+        perror("fopen");
+        exit(1);
+    }
+
+    U32f num_v, num_e;
+    if (fscanf(file, "%" SCNuFAST32 " %" SCNuFAST32, &num_v, &num_e) != 2) {
+        fprintf(stderr, "Invalid file format: missing vertex/edge count\n");
+        fclose(file);
+        exit(1);
+    }
+
+    printf("Graph info: vertices=%u, edges=%u\n", num_v, num_e);
+
+    if (num_v == 0) {
+        fprintf(stderr, "Error: Graph must have at least 1 vertex\n");
+        fclose(file);
+        exit(1);
+    }
+
+    cfg->num_v = num_v;
+    cfg->density = num_e;
+    cfg->graph = create_graph(num_v);
+
+    if (!cfg->graph) {
+        fprintf(stderr, "Failed to create graph structure\n");
+        fclose(file);
+        exit(1);
+    }
+
+    U32f src, dst, weight;
+    U32f edge_count = 0;
+
+    while (fscanf(file, "%" SCNuFAST32 " %" SCNuFAST32 " %" SCNuFAST32, &src, &dst, &weight) == 3) {
+        if (src >= num_v || dst >= num_v) {
+            fprintf(stderr, "Warning: Skipping invalid edge %u->%u (max vertex %u)\n",
+                    src, dst, num_v-1);
+            continue;
+        }
+
+        add_edge(cfg->graph, src, dst, weight);
+        if (!directed) {
+            add_edge(cfg->graph, dst, src, weight);
+        }
+        edge_count++;
+    }
+
+    fclose(file);
+
+    printf("Successfully loaded %u edges\n", edge_count);
+    if (edge_count != num_e) {
+        fprintf(stderr, "Warning: Expected %u edges, loaded %u\n", num_e, edge_count);
+    }
+}
 // Загрузка неориентированного графа
 static void load_undir_graph(const char *file_name, Config* cfg) {
     FILE *file = fopen(file_name, "r");
@@ -104,20 +222,6 @@ static void load_undir_graph(const char *file_name, Config* cfg) {
     fclose(file);
 }
 
-// Загрузка графа
-void load_graph_from_file(const char *file_name, File_config *cfg_file, Config* cfg) {
-    if (cfg_file->alg_type == DIJKSTRA_LIST ||
-        cfg_file->alg_type == DIJKSTRA_MATRIX ||
-        cfg_file->alg_type == BELMAN_FORD_LIST ||
-        cfg_file->alg_type == BELMAN_FORD_MATRIX_EDGE_LIST ||
-        cfg_file->alg_type == BELMAN_FORD_MATRIX_NO_EDGE_LIST) {
-        load_dir_graph(file_name, cfg);
-    }
-    else {
-        load_undir_graph(file_name, cfg);
-    }
-}
-
 // Вывод представлений графа
 void print_graph_representation(const Config *cfg, const File_config *cfg_file) {
     if (cfg_file->out_matrix) {
@@ -145,7 +249,16 @@ void run_config_file_var(File_config *cfg_file, Config *cfg) {
     printf("1. Generate random graph and run algorithm\n");
     printf(BREAK_LINE);
 
-    // Создаем конфигурацию со случайным графом
+    // Упрощенная проверка параметров
+    if (cfg_file->num_v == 0) {
+        fprintf(stderr, "Error: Vertex count (num_v) must be specified\n");
+        return;
+    }
+    if (cfg_file->density <= 0) {
+        fprintf(stderr, "Error: Density must be specified and >0\n");
+        return;
+    }
+
     create_config_random_weights(cfg, cfg_file->num_v, cfg_file->density,
                                 cfg_file->alg_type, cfg_file->start_vertex);
 
@@ -229,92 +342,51 @@ void run_config_file_var(File_config *cfg_file, Config *cfg) {
 
 // Запуск с графом из файла
 void run_config_file_load(File_config *cfg_file, Config *cfg) {
-    printf("2. Load graph from file and run algorithm\n");
-    printf(BREAK_LINE);
+    printf("Loading graph from file and running algorithm\n");
+    printf("--------------------------------\n");
 
-    if (!cfg_file->file_name || strlen(cfg_file->file_name) == 0) {
+    if (!cfg_file->file_name) {
         fprintf(stderr, "No input file specified\n");
         return;
     }
 
-    load_graph_from_file(cfg_file->file_name, cfg_file, cfg);
+    // Определяем тип графа на основе алгоритма
+    bool directed = (
+        cfg_file->alg_type == DIJKSTRA_LIST ||
+        cfg_file->alg_type == DIJKSTRA_MATRIX ||
+        cfg_file->alg_type == BELMAN_FORD_LIST ||
+        cfg_file->alg_type == BELMAN_FORD_MATRIX_EDGE_LIST ||
+        cfg_file->alg_type == BELMAN_FORD_MATRIX_NO_EDGE_LIST
+    );
 
-    if (!cfg->graph) {
-        printf("Error loading graph from %s\n", cfg_file->file_name);
-        return;
-    }
+    load_graph_from_file(cfg_file->file_name, cfg, directed);
 
-    create_config_from_graph(cfg, cfg_file->alg_type, cfg_file->num_v, cfg->density);
-    print_graph_representation(cfg, cfg_file);
-    free_unused_config(cfg, cfg->alg_type);
-
-    // Тот же switch-case для вызова алгоритма
-    switch (cfg->alg_type) {
+    // Просто запускаем алгоритм без лишних преобразований
+    switch (cfg_file->alg_type) {
         case DIJKSTRA_LIST:
             dijkstra_list(cfg);
-            break;
-        case DIJKSTRA_MATRIX:
-            dijkstra_matrix(cfg);
-            break;
-        case BELMAN_FORD_LIST:
-            bellman_ford_list(cfg);
-            break;
-        case BELMAN_FORD_MATRIX_EDGE_LIST:
-            bellman_ford_matrix_edge_list(cfg);
-            break;
-        case BELMAN_FORD_MATRIX_NO_EDGE_LIST:
-            bellman_ford_matrix_no_edge_list(cfg);
-            break;
-        case PRIM_LIST:
-            prim_list(cfg);
-            break;
-        case PRIM_MATRIX:
-            prim_matrix(cfg);
-            break;
-        case KRUSKAL_LIST:
-            kruskal_list(cfg);
-            break;
-        case KRUSKAL_MATRIX:
-            kruskal_matrix(cfg);
-            break;
+        break;
+        // Добавьте обработку других алгоритмов по аналогии
         default:
-            fprintf(stderr, "Unknown algorithm type\n");
-            break;
+            fprintf(stderr, "Unsupported algorithm for file input\n");
+        break;
     }
 
-    // Выводим результаты
-    printf("Results for %s:\n", alg_names[cfg_file->alg_type]);
-
+    // Вывод результатов
+    printf("\nResults for %s:\n", alg_names[cfg_file->alg_type]);
     if (cfg->res_sp) {
-        printf("Distances:\n");
+        printf("Distances from vertex %u:\n", cfg->start_vertex);
         for (U32f i = 0; i < cfg->num_v; i++) {
-            printf("  to %u: %u (parent: %u)\n", i, cfg->res_sp->distances[i], cfg->res_sp->parents[i]);
-        }
-    }
-
-    if (cfg->res_prim) {
-        printf("MST (Prim):\n");
-        for (U32f i = 0; i < cfg->num_v; i++) {
-            if (i == cfg->start_vertex) {
-                printf("  [root] %u\n", i);
-                continue;
+            if (cfg->res_sp->distances[i] == UINT_MAX) {
+                printf("  to %u: INFINITY\n", i);
+            } else {
+                printf("  to %u: %u (parent: %u)\n",
+                       i,
+                       cfg->res_sp->distances[i],
+                       cfg->res_sp->parents[i]);
             }
-            printf("  %u - %u (weight: %u)\n",
-                   cfg->res_prim->parent_weight[i].parent,
-                   i,
-                   cfg->res_prim->parent_weight[i].weight);
         }
     }
 
-    if (cfg->res_kruskal) {
-        printf("MST (Kruskal):\n");
-        for (U32f i = 0; i < cfg->res_kruskal->num_edges; i++) {
-            printf("  %u - %u (weight: %u)\n",
-                   cfg->res_kruskal->edges[i].u,
-                   cfg->res_kruskal->edges[i].v,
-                   cfg->res_kruskal->edges[i].weight);
-        }
-    }
-
-    printf(SECTION_LINE);
+    printf("================================\n");
 }

@@ -4,7 +4,10 @@
 #include <cstdlib>
 #include <cstring>
 #include <cstdio>
+#include <string>
+#include <pstl/parallel_backend_utils.h>
 
+#include "../utils/path_utils.h"
 #define MAX_WEIGHT 4096
 
 // Определение массива имен алгоритмов
@@ -34,6 +37,9 @@ static int parse_alg_type(const char* line, File_config* cfg) {
 
 // Парсинг количества вершин
 static int parse_num_v(const char* line, File_config* cfg) {
+    // Если уже указано имя файла, игнорируем num_v
+    if (cfg->file_name) return 1;
+
     int num_v = atoi(line);
     if (num_v <= 0) {
         fprintf(stderr, "Invalid vertex count: %s\n", line);
@@ -45,6 +51,9 @@ static int parse_num_v(const char* line, File_config* cfg) {
 
 // Парсинг плотности
 static int parse_density(const char* line, File_config* cfg) {
+    // Если уже указано имя файла, игнорируем density
+    if (cfg->file_name) return 1;
+
     double density = atof(line);
     if (density <= 0.0 || density > 1.0) {
         fprintf(stderr, "Invalid density: %s\n", line);
@@ -89,45 +98,58 @@ static int parse_file_name(const char* line, File_config* cfg) {
 }
 
 // Чтение конфигурационного файла
-void read_config_file(const char* filename, File_config* config) {
-    FILE* file = fopen(filename, "r"); 
+
+void read_config_file(const char* file_name, File_config* cfg) {
+    FILE* file = fopen(file_name, "r");
     if (!file) {
-        fprintf(stderr, "Cannot open config file: %s\n", filename);
-        exit(1);
+        fprintf(stderr, "Cannot open config file: %s\n", file_name);
+        return;
     }
-    
-    char section[128];
-    char value[128];
-    
-    while (fscanf(file, "%127s", section) == 1) {
-        if (section[0] == '.') {
-            if (fscanf(file, "%127s", value) != 1) continue;
-            
-            if (strcmp(section, ".alg_type") == 0) {
-                parse_alg_type(value, config);
-            }
-            else if (strcmp(section, ".num_v") == 0) {
-                parse_num_v(value, config);
-            }
-            else if (strcmp(section, ".density") == 0) {
-                parse_density(value, config);
-            }
-            else if (strcmp(section, ".start_vertex") == 0) {
-                parse_start_vertex(value, config);
-            }
-            else if (strcmp(section, ".out_matrix") == 0) {
-                parse_out_flag(value, &config->out_matrix);
-            }
-            else if (strcmp(section, ".out_list") == 0) {
-                parse_out_flag(value, &config->out_list);
-            }
-            else if (strcmp(section, ".file_name") == 0) {
-                parse_file_name(value, config);
-            }
+
+    // Инициализация значений по умолчанию
+    // cfg->alg_type = UNKNOWN_ALG;
+    cfg->file_name = nullptr;
+    cfg->start_vertex = 0;
+    cfg->out_list = false;
+    cfg->out_matrix = false;
+
+    char line[256];
+    while (fgets(line, sizeof(line), file)) {
+        // Пропускаем пустые строки и комментарии
+        if (line[0] == '\n' || line[0] == '#') continue;
+
+        char key[128], value[128];
+        if (sscanf(line, "%127s %127s", key, value) != 2) continue;
+
+        if (strcmp(key, ".alg_type") == 0) {
+            if (strcmp(value, "dijkstra_list") == 0) cfg->alg_type = DIJKSTRA_LIST;
+            // Добавьте другие алгоритмы по необходимости
+        }
+        else if (strcmp(key, ".file_name") == 0) {
+            cfg->file_name = strdup(value);
+        }
+        else if (strcmp(key, ".start_vertex") == 0) {
+            cfg->start_vertex = atoi(value);
+        }
+        else if (strcmp(key, ".out_list") == 0) {
+            cfg->out_list = (strcmp(value, "true") == 0);
+        }
+        else if (strcmp(key, ".out_matrix") == 0) {
+            cfg->out_matrix = (strcmp(value, "true") == 0);
         }
     }
-    
+
     fclose(file);
+}
+
+void print_config_file(const File_config* cfg) {
+    printf("==== CONFIGURATION ====\n");
+    printf("Algorithm: %s\n", alg_names[cfg->alg_type]);
+    printf("Start vertex: %u\n", cfg->start_vertex);
+    printf("Output list: %s\n", cfg->out_list ? "true" : "false");
+    printf("Output matrix: %s\n", cfg->out_matrix ? "true" : "false");
+    printf("Input file: %s\n", cfg->file_name ? cfg->file_name : "none");
+    printf("========================\n\n");
 }
 
 // Расчет плотности для ориентированного графа
@@ -143,6 +165,7 @@ static U32f density_undir(double density, U32f num_v) {
 // Создание конфигурации со случайными весами
 void create_config_random_weights(Config *cfg, U32f num_v, double density, 
                                  enum Alg_type alg_type, U32f start_vertex) {
+    printf("Creating config: num_v=%u, density=%f\n", num_v, density);
     // Проверки входных данных
     if (start_vertex >= num_v) {
         fprintf(stderr, "Start vertex must be less than vertex count\n");
@@ -231,30 +254,68 @@ void free_unused_config(Config *cfg, enum Alg_type alg_type) {
 
 // Освобождение конфигурации
 void free_config(Config *cfg) {
+    if (!cfg) return;
+
+    // Освобождаем граф
     if (cfg->graph) {
         free_graph(cfg->graph);
+        cfg->graph = nullptr;
     }
+
+    // Освобождаем матрицы
     if (cfg->inc_matrix_dir) {
         free(cfg->inc_matrix_dir);
+        cfg->inc_matrix_dir = nullptr;
     }
     if (cfg->inc_matrix_undir) {
         free(cfg->inc_matrix_undir);
+        cfg->inc_matrix_undir = nullptr;
     }
+
+    // Освобождаем результаты SP
     if (cfg->res_sp) {
-        free(cfg->res_sp->distances);
-        free(cfg->res_sp->parents);
+        if (cfg->res_sp->distances) {
+            free(cfg->res_sp->distances);
+            cfg->res_sp->distances = nullptr;
+        }
+        if (cfg->res_sp->parents) {
+            free(cfg->res_sp->parents);
+            cfg->res_sp->parents = nullptr;
+        }
         free(cfg->res_sp);
+        cfg->res_sp = nullptr;
+    }
+
+    // Освобождаем результаты Prim
+    if (cfg->res_prim) {
+        if (cfg->res_prim->parent_weight) {
+            free(cfg->res_prim->parent_weight);
+            cfg->res_prim->parent_weight = nullptr;
+        }
+        free(cfg->res_prim);
+        cfg->res_prim = nullptr;
+    }
+
+    // Освобождаем результаты Kruskal
+    if (cfg->res_kruskal) {
+        if (cfg->res_kruskal->edges) {
+            free(cfg->res_kruskal->edges);
+            cfg->res_kruskal->edges = nullptr;
+        }
+        free(cfg->res_kruskal);
+        cfg->res_kruskal = nullptr;
     }
 }
 
 // Освобождение конфигурации файла
-void free_config_file(File_config *cfg) {
+void free_config_file(File_config* cfg) {
+    if (!cfg) return;
+
     if (cfg->file_name) {
         free(cfg->file_name);
+        cfg->file_name = nullptr;
     }
-    free(cfg);
 }
-
 // Вывод конфигурации
 void print_config_file(File_config *cfg_file) {
     printf("==== CONFIGURATION ====\n");

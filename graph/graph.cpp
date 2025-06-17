@@ -13,6 +13,12 @@ Node* create_node(U32f vertex, U32f weight) {
 }
 
 Graph* create_graph(U32f vertices) {
+    printf("Creating graph with %u vertices\n", vertices);
+
+    if (vertices == 0) {
+        fprintf(stderr, "Error: Cannot create graph with 0 vertices\n");
+        return NULL;
+    }
     Graph* graph = (Graph*)malloc(sizeof(Graph));
     if (graph) {
         graph->num_v = vertices;
@@ -90,14 +96,17 @@ void set_rand_weights_dir(Graph* graph, U32f min_weight, U32f max_weight) {
 void free_graph(Graph* graph) {
     if (!graph) return;
 
-    for (U32f i = 0; i < graph->num_v; i++) {
-        Node* temp = graph->adjLists[i];
-        while (temp) {
-            Node* next = temp->next;
-            free(temp);
-            temp = next;
+    if (graph->adjLists) {
+        for (U32f i = 0; i < graph->num_v; i++) {
+            Node* temp = graph->adjLists[i];
+            while (temp) {
+                Node* next = temp->next;
+                free(temp);
+                temp = next;
+            }
         }
+        free(graph->adjLists);
+        graph->adjLists = nullptr;
     }
-    free(graph->adjLists);
     free(graph);
 }
