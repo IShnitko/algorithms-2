@@ -27,6 +27,9 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    // Инициализация случайных чисел
+    init_random();
+
     // Отладочная информация о путях
     char cwd[1024];
     if (GETCWD(cwd, sizeof(cwd))) {
@@ -35,9 +38,6 @@ int main(int argc, char* argv[]) {
 
     std::string resolved = resolve_path(argv[1]);
     printf("Resolved config path: %s\n", resolved.c_str());
-
-    // Инициализация случайных чисел
-    init_random();
 
     // Создание конфигурации
     File_config file_cfg;
@@ -50,14 +50,18 @@ int main(int argc, char* argv[]) {
     // Основная конфигурация
     Config cfg;
     memset(&cfg, 0, sizeof(Config));
-    cfg.start_vertex = file_cfg.start_vertex;
-    cfg.alg_type = file_cfg.alg_type;
 
     // Упрощенная логика выполнения
     if (file_cfg.file_name) {
+        // Загрузка из файла
         run_config_file_load(&file_cfg, &cfg);
+    } else if (file_cfg.num_v > 0 && file_cfg.density > 0) {
+        // Генерация случайного графа
+        run_config_file_var(&file_cfg, &cfg);
     } else {
-        fprintf(stderr, "Random graph generation not implemented\n");
+        fprintf(stderr, "Error: insufficient configuration parameters\n");
+        fprintf(stderr, "Either specify file_name or both num_v and density\n");
+        return 1;
     }
 
     // Очистка

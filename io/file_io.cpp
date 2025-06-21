@@ -250,7 +250,7 @@ void run_config_file_var(File_config *cfg_file, Config *cfg) {
     printf("1. Generate random graph and run algorithm\n");
     printf(BREAK_LINE);
 
-    // Упрощенная проверка параметров
+    // Проверка параметров
     if (cfg_file->num_v == 0) {
         fprintf(stderr, "Error: Vertex count (num_v) must be specified\n");
         return;
@@ -260,6 +260,7 @@ void run_config_file_var(File_config *cfg_file, Config *cfg) {
         return;
     }
 
+    // Создаем конфигурацию со случайными весами
     create_config_random_weights(cfg, cfg_file->num_v, cfg_file->density,
                                 cfg_file->alg_type, cfg_file->start_vertex);
 
