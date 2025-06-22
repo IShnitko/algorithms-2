@@ -25,7 +25,6 @@ void bellman_ford_list(Config* cfg) {
 
     // Замер времени выполнения
     Timer timer;
-    timer.start();
 
     // Основной алгоритм: релаксация всех рёбер (V-1) раз
     bool changed;
@@ -89,7 +88,7 @@ void bellman_ford_list(Config* cfg) {
     }
 
     // Фиксация времени выполнения
-    cfg->execution_time = timer.stop();
+    cfg->execution_time = timer.elapsed();
 
     if (has_negative_cycle) {
         fprintf(stderr, "Graph contains negative weight cycle\n");
@@ -147,7 +146,6 @@ void bellman_ford_matrix_edge_list(Config* cfg) {
 
     // Замер времени выполнения
     Timer timer;
-    timer.start();
 
     // Основной алгоритм: релаксация всех рёбер (V-1) раз
     bool changed;
@@ -198,7 +196,7 @@ void bellman_ford_matrix_edge_list(Config* cfg) {
     }
 
     // Фиксация времени выполнения
-    cfg->execution_time = timer.stop();
+    cfg->execution_time = timer.elapsed();
 
     // Освобождение ресурсов
     free(edges);
@@ -228,7 +226,6 @@ void bellman_ford_matrix_no_edge_list(Config* cfg) {
 
     // Замер времени выполнения
     Timer timer;
-    timer.start();
 
     // Основной алгоритм: релаксация всех рёбер (V-1) раз
     bool changed;
@@ -300,7 +297,7 @@ void bellman_ford_matrix_no_edge_list(Config* cfg) {
     }
 
     // Фиксация времени выполнения
-    cfg->execution_time = timer.stop();
+    cfg->execution_time = timer.elapsed();
 
     if (has_negative_cycle) {
         fprintf(stderr, "Graph contains negative weight cycle\n");

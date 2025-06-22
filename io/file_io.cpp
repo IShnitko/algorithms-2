@@ -9,10 +9,11 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <direct.h>
+#include <unistd.h>
 #include <string>
 #include "../utils/timer.h"
-
+#include <climits>  // Для UINT_MAX
+#include <cstdint>  // Для UINT32_MAX
 #define BREAK_LINE "--------------------------------\n"
 #define SECTION_LINE "================================\n"
 
@@ -39,7 +40,7 @@ static void load_graph_file(const char *file_name, Config *cfg, bool directed) {
         exit(1);
     }
 
-    printf("Graph info: vertices=%u, edges=%u\n", num_v, num_e);
+    printf("Graph info: vertices=%lu, edges=%lu\n", num_v, num_e);
 
     if (num_v == 0) {
         fprintf(stderr, "Error: Graph must have at least 1 vertex\n");
@@ -62,7 +63,7 @@ static void load_graph_file(const char *file_name, Config *cfg, bool directed) {
 
     while (fscanf(file, "%" SCNuFAST32 " %" SCNuFAST32 " %" SCNuFAST32, &src, &dst, &weight) == 3) {
         if (src >= num_v || dst >= num_v) {
-            fprintf(stderr, "Warning: Skipping invalid edge %u->%u (max vertex %u)\n",
+            fprintf(stderr, "Warning: Skipping invalid edge %lu->%lu (max vertex %lu)\n",
                     src, dst, num_v-1);
             continue;
         }
@@ -76,9 +77,9 @@ static void load_graph_file(const char *file_name, Config *cfg, bool directed) {
 
     fclose(file);
 
-    printf("Successfully loaded %u edges\n", edge_count);
+    printf("Successfully loaded %lu edges\n", edge_count);
     if (edge_count != num_e) {
-        fprintf(stderr, "Warning: Expected %u edges, loaded %u\n", num_e, edge_count);
+        fprintf(stderr, "Warning: Expected %lu edges, loaded %lu\n", num_e, edge_count);
     }
 }
 
@@ -106,12 +107,12 @@ static void load_simple_graph(const char *file_name, Graph** graph, bool directe
     U32f src, dst, weight;
     for (U32f i = 0; i < num_e; i++) {
         if (fscanf(file, "%" SCNuFAST32 " %" SCNuFAST32 " %" SCNuFAST32, &src, &dst, &weight) != 3) {
-            fprintf(stderr, "Error reading edge %u\n", i);
+            fprintf(stderr, "Error reading edge %lu\n", i);
             continue;
         }
 
         if (src >= num_v || dst >= num_v) {
-            fprintf(stderr, "Invalid edge: %u -> %u (max vertex %u)\n", src, dst, num_v-1);
+            fprintf(stderr, "Invalid edge: %lu -> %lu (max vertex %lu)\n", src, dst, num_v-1);
             continue;
         }
 
@@ -143,7 +144,7 @@ void load_graph_from_file(const char *file_name, Config *cfg, bool directed) {
         exit(1);
     }
 
-    printf("Graph info: vertices=%u, edges=%u\n", num_v, num_e);
+    printf("Graph info: vertices=%lu, edges=%lu\n", num_v, num_e);
 
     if (num_v == 0) {
         fprintf(stderr, "Error: Graph must have at least 1 vertex\n");
@@ -166,7 +167,7 @@ void load_graph_from_file(const char *file_name, Config *cfg, bool directed) {
 
     while (fscanf(file, "%" SCNuFAST32 " %" SCNuFAST32 " %" SCNuFAST32, &src, &dst, &weight) == 3) {
         if (src >= num_v || dst >= num_v) {
-            fprintf(stderr, "Warning: Skipping invalid edge %u->%u (max vertex %u)\n",
+            fprintf(stderr, "Warning: Skipping invalid edge %lu->%lu (max vertex %lu)\n",
                     src, dst, num_v-1);
             continue;
         }
@@ -180,9 +181,9 @@ void load_graph_from_file(const char *file_name, Config *cfg, bool directed) {
 
     fclose(file);
 
-    printf("Successfully loaded %u edges\n", edge_count);
+    printf("Successfully loaded %lu edges\n", edge_count);
     if (edge_count != num_e) {
-        fprintf(stderr, "Warning: Expected %u edges, loaded %u\n", num_e, edge_count);
+        fprintf(stderr, "Warning: Expected %lu edges, loaded %lu\n", num_e, edge_count);
     }
 }
 // Загрузка неориентированного графа
@@ -213,7 +214,7 @@ static void load_undir_graph(const char *file_name, Config* cfg) {
     U32f src, dst, weight;
     while (fscanf(file, "%" SCNuFAST32 " %" SCNuFAST32 " %" SCNuFAST32, &src, &dst, &weight) == 3) {
         if (src >= num_v || dst >= num_v) {
-            fprintf(stderr, "Invalid vertex index: %u-%u\n", src, dst);
+            fprintf(stderr, "Invalid vertex index: %lu-%lu\n", src, dst);
             continue;
         }
         add_edge(cfg->graph, src, dst, weight);
@@ -311,7 +312,7 @@ void run_config_file_var(File_config *cfg_file, Config *cfg) {
     if (cfg->res_sp) {
         printf("Distances:\n");
         for (U32f i = 0; i < cfg->num_v; i++) {
-            printf("  to %u: %u (parent: %u)\n", i, cfg->res_sp->distances[i], cfg->res_sp->parents[i]);
+            printf("  to %lu: %lu (parent: %lu)\n", i, cfg->res_sp->distances[i], cfg->res_sp->parents[i]);
         }
     }
 
@@ -319,10 +320,10 @@ void run_config_file_var(File_config *cfg_file, Config *cfg) {
         printf("MST (Prim):\n");
         for (U32f i = 0; i < cfg->num_v; i++) {
             if (i == cfg->start_vertex) {
-                printf("  [root] %u\n", i);
+                printf("  [root] %lu\n", i);
                 continue;
             }
-            printf("  %u - %u (weight: %u)\n",
+            printf("  %lu - %lu (weight: %lu)\n",
                    cfg->res_prim->parent_weight[i].parent,
                    i,
                    cfg->res_prim->parent_weight[i].weight);
@@ -332,7 +333,7 @@ void run_config_file_var(File_config *cfg_file, Config *cfg) {
     if (cfg->res_kruskal) {
         printf("MST (Kruskal):\n");
         for (U32f i = 0; i < cfg->res_kruskal->num_edges; i++) {
-            printf("  %u - %u (weight: %u)\n",
+            printf("  %lu - %lu (weight: %lu)\n",
                    cfg->res_kruskal->edges[i].u,
                    cfg->res_kruskal->edges[i].v,
                    cfg->res_kruskal->edges[i].weight);
@@ -417,12 +418,12 @@ void run_config_file_load(File_config *cfg_file, Config *cfg) {
 
     // Вывод кратчайших путей
     if (cfg->res_sp) {
-        printf("Distances from vertex %u:\n", cfg->start_vertex);
+        printf("Distances from vertex %lu:\n", cfg->start_vertex);
         for (U32f i = 0; i < cfg->num_v; i++) {
-            if (cfg->res_sp->distances[i] == UINT_MAX) {
-                printf("  to %u: INFINITY\n", i);
+            if (cfg->res_sp->distances[i] == UINT32_MAX) {
+                printf("  to %lu: INFINITY\n", i);
             } else {
-                printf("  to %u: %u (parent: %u)\n",
+                printf("  to %lu: %lu (parent: %lu)\n",
                        i,
                        cfg->res_sp->distances[i],
                        cfg->res_sp->parents[i]);
@@ -437,14 +438,14 @@ void run_config_file_load(File_config *cfg_file, Config *cfg) {
         for (U32f i = 0; i < cfg->num_v; i++) {
             if (i == cfg->start_vertex) continue;
             if (cfg->res_prim->parent_weight[i].parent != UINT32_MAX) {
-                printf("  %u - %u (weight: %u)\n",
+                printf("  %lu - %lu (weight: %lu)\n",
                        cfg->res_prim->parent_weight[i].parent,
                        i,
                        cfg->res_prim->parent_weight[i].weight);
                 total_weight += cfg->res_prim->parent_weight[i].weight;
             }
         }
-        printf("Total MST weight: %u\n", total_weight);
+        printf("Total MST weight: %lu\n", total_weight);
     }
 
     // Вывод MST для Крускала
@@ -452,13 +453,13 @@ void run_config_file_load(File_config *cfg_file, Config *cfg) {
         printf("MST (Kruskal) edges:\n");
         U32f total_weight = 0;
         for (U32f i = 0; i < cfg->res_kruskal->num_edges; i++) {
-            printf("  %u - %u (weight: %u)\n",
+            printf("  %lu - %lu (weight: %lu)\n",
                    cfg->res_kruskal->edges[i].u,
                    cfg->res_kruskal->edges[i].v,
                    cfg->res_kruskal->edges[i].weight);
             total_weight += cfg->res_kruskal->edges[i].weight;
         }
-        printf("Total MST weight: %u\n", total_weight);
+        printf("Total MST weight: %lu\n", total_weight);
     }
 
     printf(SECTION_LINE);

@@ -1,6 +1,7 @@
-.alg_type dijkstra_matrix
-.num_v 13
-.density 0.7
+
+.alg_type kruskal_matrix
+.num_v 8
+.density 0.5
 .start_vertex 0
 .out_matrix true
 .out_list false

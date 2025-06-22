@@ -72,7 +72,6 @@ void kruskal_list(Config* cfg) {
 
     // Замер времени выполнения
     Timer timer;
-    timer.start();
 
     // Основной алгоритм: перебираем рёбра в порядке возрастания веса
     for (U32f i = 0; i < total_edges; i++) {
@@ -94,7 +93,7 @@ void kruskal_list(Config* cfg) {
     }
 
     // Фиксация времени выполнения
-    cfg->execution_time = timer.stop();
+    cfg->execution_time = timer.elapsed();
 
     // Освобождение ресурсов
     free(edges);
@@ -154,7 +153,6 @@ void kruskal_matrix(Config* cfg) {
 
     // Замер времени выполнения
     Timer timer;
-    timer.start();
 
     // Основной алгоритм
     for (U32f i = 0; i < edge_count; i++) {
@@ -174,7 +172,7 @@ void kruskal_matrix(Config* cfg) {
     }
 
     // Фиксация времени выполнения
-    cfg->execution_time = timer.stop();
+    cfg->execution_time = timer.elapsed();
 
     // Освобождение ресурсов
     free(edges);

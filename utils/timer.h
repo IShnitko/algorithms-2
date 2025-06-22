@@ -1,16 +1,21 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include <windows.h>
+#include <chrono>
 
 class Timer {
-    LARGE_INTEGER start_time;
-    LARGE_INTEGER frequency;
-
+    std::chrono::high_resolution_clock::time_point start_time;
 public:
-    Timer();
-    void start();\
-    double stop(); // Returns milliseconds
+    Timer() : start_time(std::chrono::high_resolution_clock::now()) {}
+
+    void reset() {
+        start_time = std::chrono::high_resolution_clock::now();
+    }
+
+    double elapsed() const {
+        auto end = std::chrono::high_resolution_clock::now();
+        return std::chrono::duration<double, std::milli>(end - start_time).count();
+    }
 };
 
 #endif // TIMER_H

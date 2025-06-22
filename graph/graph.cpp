@@ -13,7 +13,7 @@ Node* create_node(U32f vertex, U32f weight) {
 }
 
 Graph* create_graph(U32f vertices) {
-    printf("Creating graph with %u vertices\n", vertices);
+    printf("Creating graph with %lu vertices\n", vertices);
 
     if (vertices == 0) {
         fprintf(stderr, "Error: Cannot create graph with 0 vertices\n");

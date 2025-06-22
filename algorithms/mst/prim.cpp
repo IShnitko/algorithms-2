@@ -36,7 +36,6 @@ void prim_list(Config* cfg) {
 
     // Замер времени выполнения
     Timer timer;
-    timer.start();
 
     // Основной алгоритм
     while (!min_heap_is_empty(heap)) {
@@ -66,7 +65,7 @@ void prim_list(Config* cfg) {
     }
 
     // Фиксация времени выполнения
-    cfg->execution_time = timer.stop();
+    cfg->execution_time = timer.elapsed();
 
     // Сохранение результатов
     for (U32f i = 0; i < num_v; i++) {
@@ -110,7 +109,6 @@ void prim_matrix(Config* cfg) {
 
     // Замер времени выполнения
     Timer timer;
-    timer.start();
 
     // Основной алгоритм
     while (!min_heap_is_empty(heap)) {
@@ -151,7 +149,7 @@ void prim_matrix(Config* cfg) {
     }
 
     // Фиксация времени выполнения
-    cfg->execution_time = timer.stop();
+    cfg->execution_time = timer.elapsed();
 
     // Сохранение результатов
     for (U32f i = 0; i < num_v; i++) {

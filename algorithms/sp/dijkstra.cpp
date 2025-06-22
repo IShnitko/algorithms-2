@@ -22,7 +22,7 @@ void dijkstra_list(Config *cfg) {
 
     // Проверка корректности стартовой вершины
     if (start >= n) {
-        fprintf(stderr, "Start vertex %u is out of range [0, %u]\n", start, n-1);
+        fprintf(stderr, "Start vertex %lu is out of range [0, %lu]\n", start, n-1);
         return;
     }
 
