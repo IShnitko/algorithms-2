@@ -7,95 +7,99 @@
 #include <cstdlib>
 #include <cstdio>
 
-// Реализация для списка смежности
+// Prim's algorithm using adjacency list representation
 void prim_list(Config* cfg) {
-    U32f num_v = cfg->num_v;
-    U32f start_vertex = cfg->start_vertex;
-    Graph* graph = cfg->graph;
+    U32f num_v = cfg->num_v;                   // Number of vertices
+    U32f start_vertex = cfg->start_vertex;     // Starting vertex
+    Graph* graph = cfg->graph;                 // Pointer to graph
 
-    // Инициализация результатов
+    // Allocate memory for result structure
     cfg->res_prim = (Res_prim*)malloc(sizeof(Res_prim));
     cfg->res_prim->parent_weight = (PrimResult*)malloc(num_v * sizeof(PrimResult));
 
-    // Инициализация массивов
-    U32f* key = (U32f*)malloc(num_v * sizeof(U32f));
-    U32f* parent = (U32f*)malloc(num_v * sizeof(U32f));
-    bool* inMST = (bool*)malloc(num_v * sizeof(bool));
+    // Allocate helper arrays
+    U32f* key = (U32f*)malloc(num_v * sizeof(U32f));       // Minimum edge weight to each vertex
+    U32f* parent = (U32f*)malloc(num_v * sizeof(U32f));    // Parent of each vertex in MST
+    bool* inMST = (bool*)malloc(num_v * sizeof(bool));     // Inclusion status in MST
 
+    // Initialize all vertices
     for (U32f i = 0; i < num_v; i++) {
-        key[i] = UINT32_MAX;
-        parent[i] = UINT32_MAX;
-        inMST[i] = false;
+        key[i] = UINT32_MAX;       // Set key to "infinity"
+        parent[i] = UINT32_MAX;    // No parent yet
+        inMST[i] = false;          // Not in MST
     }
-    key[start_vertex] = 0;
-    parent[start_vertex] = start_vertex;
+    key[start_vertex] = 0;                     // Start vertex has key 0
+    parent[start_vertex] = start_vertex;       // It is its own parent initially
 
-    // Создание и инициализация минимальной кучи
+    // Create min-heap and insert the start vertex
     MinHeap* heap = create_min_heap(num_v);
     min_heap_insert(heap, start_vertex, key[start_vertex]);
 
-    // Замер времени выполнения
+    // Start timer
     Timer timer;
     timer.start();
 
-    // Основной алгоритм
+    // Main loop of Prim's algorithm
     while (!min_heap_is_empty(heap)) {
-        HeapItem min_item = min_heap_extract_min(heap);
+        HeapItem min_item = min_heap_extract_min(heap); // Extract vertex with minimum key
         U32f u = min_item.vertex;
-        inMST[u] = true;
+        inMST[u] = true;                                // Mark as included in MST
 
-        // Перебор соседей
+        // Traverse all adjacent vertices
         Node* node = graph->adjLists[u];
         while (node != nullptr) {
             U32f v = node->vertex;
             U32f weight = node->weight;
 
-            // Если вершина v ещё не в MST и вес меньше текущего ключа
+            // Update key and parent if better edge is found
             if (!inMST[v] && weight < key[v]) {
                 key[v] = weight;
                 parent[v] = u;
 
+                // Update or insert in heap
                 if (heap->indices[v] != UINT32_MAX) {
                     min_heap_decrease_key(heap, v, key[v]);
                 } else {
                     min_heap_insert(heap, v, key[v]);
                 }
             }
-            node = node->next;
+            node = node->next; // Move to next adjacent vertex
         }
     }
 
-    // Фиксация времени выполнения
+    // Stop timer and store execution time
     cfg->execution_time = timer.stop();
 
-    // Сохранение результатов
+    // Save MST results
     for (U32f i = 0; i < num_v; i++) {
         cfg->res_prim->parent_weight[i].parent = parent[i];
         cfg->res_prim->parent_weight[i].weight = (i == start_vertex) ? 0 : key[i];
     }
 
-    // Освобождение ресурсов
+    // Free allocated memory
     free_min_heap(heap);
     free(key);
     free(parent);
     free(inMST);
 }
-// Реализация для матрицы инцидентности
-void prim_matrix(Config* cfg) {
-    U32f num_v = cfg->num_v;
-    U32f density = cfg->density;
-    U32f start_vertex = cfg->start_vertex;
-    U32f* inc_matrix = cfg->inc_matrix_undir;
 
-    // Инициализация результатов
+// Prim's algorithm using incidence matrix representation
+void prim_matrix(Config* cfg) {
+    U32f num_v = cfg->num_v;                   // Number of vertices
+    U32f density = cfg->density;               // Number of edges
+    U32f start_vertex = cfg->start_vertex;     // Starting vertex
+    U32f* inc_matrix = cfg->inc_matrix_undir;  // Pointer to incidence matrix
+
+    // Allocate memory for result structure
     cfg->res_prim = (Res_prim*)malloc(sizeof(Res_prim));
     cfg->res_prim->parent_weight = (PrimResult*)malloc(num_v * sizeof(PrimResult));
 
-    // Инициализация массивов
-    U32f* key = (U32f*)malloc(num_v * sizeof(U32f));
-    U32f* parent = (U32f*)malloc(num_v * sizeof(U32f));
-    bool* inMST = (bool*)malloc(num_v * sizeof(bool));
+    // Allocate helper arrays
+    U32f* key = (U32f*)malloc(num_v * sizeof(U32f));       // Minimum edge weight to each vertex
+    U32f* parent = (U32f*)malloc(num_v * sizeof(U32f));    // Parent of each vertex in MST
+    bool* inMST = (bool*)malloc(num_v * sizeof(bool));     // Inclusion status in MST
 
+    // Initialize all vertices
     for (U32f i = 0; i < num_v; i++) {
         key[i] = UINT32_MAX;
         parent[i] = UINT32_MAX;
@@ -104,25 +108,25 @@ void prim_matrix(Config* cfg) {
     key[start_vertex] = 0;
     parent[start_vertex] = start_vertex;
 
-    // Создание и инициализация минимальной кучи
+    // Create min-heap and insert the start vertex
     MinHeap* heap = create_min_heap(num_v);
     min_heap_insert(heap, start_vertex, key[start_vertex]);
 
-    // Замер времени выполнения
+    // Start timer
     Timer timer;
     timer.start();
 
-    // Основной алгоритм
+    // Main loop of Prim's algorithm
     while (!min_heap_is_empty(heap)) {
         HeapItem min_item = min_heap_extract_min(heap);
         U32f u = min_item.vertex;
         inMST[u] = true;
 
-        // Перебор рёбер через матрицу инцидентности
+        // Iterate over edges connected to vertex u
         for (U32f j = 0; j < density; j++) {
             U32f idx = u * density + j;
             if (inc_matrix[idx] != 0) {
-                // Поиск второй вершины в ребре
+                // Find the other vertex connected by edge j
                 U32f v = UINT32_MAX;
                 for (U32f k = 0; k < num_v; k++) {
                     if (k == u) continue;
@@ -132,14 +136,15 @@ void prim_matrix(Config* cfg) {
                     }
                 }
 
-                if (v == UINT32_MAX) continue;
+                if (v == UINT32_MAX) continue; // Invalid edge
                 U32f weight = inc_matrix[idx];
 
-                // Если вершина v ещё не в MST и вес меньше текущего ключа
+                // Update key and parent if better edge is found
                 if (!inMST[v] && weight < key[v]) {
                     key[v] = weight;
                     parent[v] = u;
 
+                    // Update or insert in heap
                     if (heap->indices[v] != UINT32_MAX) {
                         min_heap_decrease_key(heap, v, key[v]);
                     } else {
@@ -150,16 +155,16 @@ void prim_matrix(Config* cfg) {
         }
     }
 
-    // Фиксация времени выполнения
+    // Stop timer and store execution time
     cfg->execution_time = timer.stop();
 
-    // Сохранение результатов
+    // Save MST results
     for (U32f i = 0; i < num_v; i++) {
         cfg->res_prim->parent_weight[i].parent = parent[i];
         cfg->res_prim->parent_weight[i].weight = (i == start_vertex) ? 0 : key[i];
     }
 
-    // Освобождение ресурсов
+    // Free allocated memory
     free_min_heap(heap);
     free(key);
     free(parent);

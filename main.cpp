@@ -16,47 +16,50 @@
 #define GETCWD getcwd
 #endif
 
+// Check if a file exists by trying to stat it
 bool file_exists(const char* filename) {
     struct stat buffer;
     return (stat(filename, &buffer) == 0);
 }
 
 int main(int argc, char* argv[]) {
+    // Expect exactly one argument: config file path
     if (argc != 2) {
         printf("Usage: %s <config_file>\n", argv[0]);
         return 1;
     }
 
-    // Инициализация случайных чисел
+    // Initialize random number generator
     init_random();
 
-    // Отладочная информация о путях
+    // Print current working directory for debug purposes
     char cwd[1024];
     if (GETCWD(cwd, sizeof(cwd))) {
         printf("Current working directory: %s\n", cwd);
     }
 
+    // Resolve the config file path using custom logic
     std::string resolved = resolve_path(argv[1]);
     printf("Resolved config path: %s\n", resolved.c_str());
 
-    // Создание конфигурации
+    // Initialize file configuration struct with zeros
     File_config file_cfg;
     memset(&file_cfg, 0, sizeof(File_config));
 
-    // Чтение конфигурации
+    // Read configuration from the resolved file path
     read_config_file(resolved.c_str(), &file_cfg);
     print_config_file(&file_cfg);
 
-    // Основная конфигурация
+    // Initialize main configuration struct with zeros
     Config cfg;
     memset(&cfg, 0, sizeof(Config));
 
-    // Упрощенная логика выполнения
+    // Simple decision logic for configuration execution
     if (file_cfg.file_name) {
-        // Загрузка из файла
+        // Load configuration from file
         run_config_file_load(&file_cfg, &cfg);
     } else if (file_cfg.num_v > 0 && file_cfg.density > 0) {
-        // Генерация случайного графа
+        // Generate a random graph based on parameters
         run_config_file_var(&file_cfg, &cfg);
     } else {
         fprintf(stderr, "Error: insufficient configuration parameters\n");
@@ -64,7 +67,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // Очистка
+    // Clean up allocated resources
     free_config(&cfg);
     free_config_file(&file_cfg);
 

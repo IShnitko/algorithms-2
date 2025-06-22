@@ -6,12 +6,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// Swaps two unsigned 32-bit integers
 static void swap(U32f *a, U32f *b) {
     U32f temp = *a;
     *a = *b;
     *b = temp;
 }
 
+// Fisher–Yates shuffle for two arrays (used as edge endpoints)
 static void shuffle(U32f *arr_u, U32f *arr_v, size_t n) {
     if (n <= 1) return;
     for (size_t i = n - 1; i > 0; i--) {
@@ -21,21 +23,24 @@ static void shuffle(U32f *arr_u, U32f *arr_v, size_t n) {
     }
 }
 
+// Converts a Prufer sequence to a tree (returns array of edge pairs)
 static U32f* prufer_to_tree(U32f *seq, U32f len_seq) {
     U32f *edges = (U32f *)malloc(sizeof(U32f) * 2 * (len_seq + 1));
     int i_edges = 0;
     U32f length = len_seq + 2;
     U32f *degree = (U32f *)malloc(length * sizeof(U32f));
 
+    // Initially, all nodes have degree 1
     for (U32f i = 0; i < length; i++) {
         degree[i] = 1;
     }
 
+    // Increment degrees based on sequence
     for (U32f i = 0; i < len_seq; i++) {
-        U32f node = seq[i];
-        degree[node]++;
+        degree[seq[i]]++;
     }
 
+    // Generate edges from sequence
     for (U32f i = 0; i < len_seq; i++) {
         U32f node_seq = seq[i];
         for (U32f j = 0; j < length; j++) {
@@ -50,6 +55,7 @@ static U32f* prufer_to_tree(U32f *seq, U32f len_seq) {
         }
     }
 
+    // Add the last remaining edge
     U32f u = 0, v = 0;
     int first = 1;
     for (U32f i = 0; i < length; i++) {
@@ -69,6 +75,7 @@ static U32f* prufer_to_tree(U32f *seq, U32f len_seq) {
     return edges;
 }
 
+// Generates a random Prufer sequence of given length
 static U32f *prufer_rand_seq(U32f verticies) {
     U32f* seq = (U32f *)malloc(sizeof(U32f) * verticies);
     for (U32f i = 0; i < verticies; i++) {
@@ -77,18 +84,21 @@ static U32f *prufer_rand_seq(U32f verticies) {
     return seq;
 }
 
+// Creates a random undirected connected graph with given density
 void create_rand_undir_graph(Graph *graph, I32f density) {
     U32f verticies = graph->num_v;
     U32f *seq = prufer_rand_seq(verticies - 2);
     U32f *edges = prufer_to_tree(seq, verticies - 2);
     free(seq);
 
+    // Add tree edges (bidirectional)
     for (U32f i = 0; i < verticies - 1; i++) {
         add_edge(graph, edges[i * 2], edges[i * 2 + 1], 0);
         add_edge(graph, edges[i * 2 + 1], edges[i * 2], 0);
     }
-
     free(edges);
+
+    // Prepare candidates for remaining edges
     U32f max_edges = verticies * (verticies - 1) / 2;
     U32f numb = max_edges - verticies + 1;
 
@@ -106,11 +116,11 @@ void create_rand_undir_graph(Graph *graph, I32f density) {
     }
 
     shuffle(candidates_u, candidates_v, ind);
-    density = density - (verticies - 1);
-
+    density -= (verticies - 1);
     if (density > ind) density = ind;
     else if (density < 0) density = 0;
 
+    // Add remaining random edges
     for (U32f i = 0; i < density; i++) {
         add_edge(graph, candidates_u[i], candidates_v[i], 0);
         add_edge(graph, candidates_v[i], candidates_u[i], 0);
@@ -120,6 +130,7 @@ void create_rand_undir_graph(Graph *graph, I32f density) {
     free(candidates_v);
 }
 
+// Helper: constructs directed tree from parent array
 static void get_dir_tree(Graph *graph, U32f *parent, U32f start_vertex, U32f *visited) {
     visited[start_vertex] = 1;
     for (Node *temp = graph->adjLists[start_vertex]; temp != NULL; temp = temp->next) {
@@ -130,6 +141,7 @@ static void get_dir_tree(Graph *graph, U32f *parent, U32f start_vertex, U32f *vi
     }
 }
 
+// Creates a random directed graph with given density
 void create_rand_dir_graph(Graph *graph, I32f density, U32f start_vertex) {
     U32f verticies = graph->num_v;
     U32f *seq = prufer_rand_seq(verticies - 2);
@@ -146,7 +158,6 @@ void create_rand_dir_graph(Graph *graph, I32f density, U32f start_vertex) {
     U32f *parent = (U32f *)malloc(verticies * sizeof(U32f));
     U32f *visited = (U32f *)calloc(verticies, sizeof(U32f));
     get_dir_tree(t_graph, parent, start_vertex, visited);
-
     free(visited);
     free_graph(t_graph);
 
@@ -157,6 +168,7 @@ void create_rand_dir_graph(Graph *graph, I32f density, U32f start_vertex) {
     }
     free(parent);
 
+    // Prepare additional candidate edges
     U32f max_edges = verticies * (verticies - 1);
     U32f numb = max_edges - verticies + 1;
 
@@ -174,11 +186,11 @@ void create_rand_dir_graph(Graph *graph, I32f density, U32f start_vertex) {
     }
 
     shuffle(candidates_u, candidates_v, ind);
-    density = density - (verticies - 1);
-
+    density -= (verticies - 1);
     if (ind > 0 && density > ind) density = ind;
     else if (density < 0) density = 0;
 
+    // Add extra edges
     for (U32f i = 0; i < density; i++) {
         add_edge(graph, candidates_u[i], candidates_v[i], 0);
     }
@@ -187,8 +199,8 @@ void create_rand_dir_graph(Graph *graph, I32f density, U32f start_vertex) {
     free(candidates_v);
 }
 
+// Creates undirected incidence matrix from graph
 U32f *create_inc_undir_matrix(Graph* graph, U32f density) {
-
     printf("Creating undirected incidence matrix: vertices=%u, density=%u\n", graph->num_v, density);
     U32f *inc_matrix = (U32f *)calloc(graph->num_v * density, sizeof(U32f));
     if (!inc_matrix) {
@@ -212,6 +224,7 @@ U32f *create_inc_undir_matrix(Graph* graph, U32f density) {
     return inc_matrix;
 }
 
+// Creates directed incidence matrix from graph
 I32f *create_inc_dir_matrix(Graph* graph, U32f density) {
     printf("Creating directed incidence matrix: vertices=%u, density=%u\n", graph->num_v, density);
     I32f *inc_matrix = (I32f *)calloc(graph->num_v * density, sizeof(I32f));
@@ -236,25 +249,24 @@ I32f *create_inc_dir_matrix(Graph* graph, U32f density) {
     return inc_matrix;
 }
 
+// Generates a connected graph with a specified density and direction
 Graph* generate_connected_graph(U32f vertices, double density, bool directed) {
     if (vertices == 0) return nullptr;
 
-    // Рассчитываем количество рёбер
     U32f max_edges = directed ? vertices * (vertices - 1) : vertices * (vertices - 1) / 2;
-    U32f min_edges = vertices - 1;  // Минимум для связности
+    U32f min_edges = vertices - 1;
     U32f target_edges = min_edges + static_cast<U32f>((max_edges - min_edges) * density);
 
     Graph* graph = create_graph(vertices);
     if (!graph) return nullptr;
 
-    // Шаг 1: Создаем связный граф (остовное дерево)
     DSU dsu(vertices);
     U32f edges_added = 0;
 
+    // Step 1: Add minimum spanning tree
     while (edges_added < min_edges) {
-        U32f u = rand_range(0, vertices-1);
-        U32f v = rand_range(0, vertices-1);
-
+        U32f u = rand_range(0, vertices - 1);
+        U32f v = rand_range(0, vertices - 1);
         if (u != v && dsu.find(u) != dsu.find(v)) {
             U32f weight = rand_range(1, 100);
             add_edge(graph, u, v, weight);
@@ -266,11 +278,10 @@ Graph* generate_connected_graph(U32f vertices, double density, bool directed) {
         }
     }
 
-    // Шаг 2: Добавляем оставшиеся рёбра до нужной плотности
+    // Step 2: Add remaining edges
     while (edges_added < target_edges) {
-        U32f u = rand_range(0, vertices-1);
-        U32f v = rand_range(0, vertices-1);
-
+        U32f u = rand_range(0, vertices - 1);
+        U32f v = rand_range(0, vertices - 1);
         if (u != v && !check_edge(graph, u, v)) {
             U32f weight = rand_range(1, 100);
             add_edge(graph, u, v, weight);

@@ -7,11 +7,11 @@
 #include <string>
 #include <pstl/parallel_backend_utils.h>
 #include "../utils/path_utils.h"
-#include "../utils/random.h" // Добавляем для init_random
+#include "../utils/random.h" // Added for init_random
 
 #define MAX_WEIGHT 4096
 
-// Определение массива имен алгоритмов
+// Array of algorithm names
 const char* alg_names[ALG_TYPE_COUNT] = {
     "dijkstra_list",
     "dijkstra_matrix",
@@ -24,7 +24,7 @@ const char* alg_names[ALG_TYPE_COUNT] = {
     "kruskal_matrix"
 };
 
-// Упрощенная и улучшенная функция чтения конфигурации
+// Reads the configuration file into File_config struct
 void read_config_file(const char* file_name, File_config* cfg) {
     FILE* file = fopen(file_name, "r");
     if (!file) {
@@ -32,24 +32,24 @@ void read_config_file(const char* file_name, File_config* cfg) {
         return;
     }
 
-    // Инициализация значений по умолчанию
+    // Initialize default values
     memset(cfg, 0, sizeof(File_config));
-    // cfg->alg_type = UNKNOWN_ALG;
 
     char line[256];
     while (fgets(line, sizeof(line), file)) {
-        // Пропускаем комментарии и пустые строки
+        // Skip comments and empty lines
         if (line[0] == '#' || line[0] == '\n' || line[0] == '\r') continue;
 
         char key[128], value[128];
         if (sscanf(line, "%127s %127s", key, value) != 2) continue;
 
-        // Удаляем возможные возвраты каретки
+        // Remove possible carriage return / newline characters
         char* cr = strchr(value, '\r');
         if (cr) *cr = '\0';
         cr = strchr(value, '\n');
         if (cr) *cr = '\0';
 
+        // Parse configuration entries
         if (strcmp(key, ".alg_type") == 0) {
             if (strcmp(value, "dijkstra_list") == 0) cfg->alg_type = DIJKSTRA_LIST;
             else if (strcmp(value, "dijkstra_matrix") == 0) cfg->alg_type = DIJKSTRA_MATRIX;
@@ -61,29 +61,25 @@ void read_config_file(const char* file_name, File_config* cfg) {
             else if (strcmp(value, "kruskal_list") == 0) cfg->alg_type = KRUSKAL_LIST;
             else if (strcmp(value, "kruskal_matrix") == 0) cfg->alg_type = KRUSKAL_MATRIX;
             else fprintf(stderr, "Unknown algorithm type: %s\n", value);
-        }
-        else if (strcmp(key, ".file_name") == 0) {
+        } else if (strcmp(key, ".file_name") == 0) {
             cfg->file_name = strdup(value);
-        }
-        else if (strcmp(key, ".start_vertex") == 0) {
+        } else if (strcmp(key, ".start_vertex") == 0) {
             cfg->start_vertex = atoi(value);
-        }
-        else if (strcmp(key, ".out_list") == 0) {
+        } else if (strcmp(key, ".out_list") == 0) {
             cfg->out_list = (strcmp(value, "true") == 0);
-        }
-        else if (strcmp(key, ".out_matrix") == 0) {
+        } else if (strcmp(key, ".out_matrix") == 0) {
             cfg->out_matrix = (strcmp(value, "true") == 0);
-        }
-        else if (strcmp(key, ".num_v") == 0) {
+        } else if (strcmp(key, ".num_v") == 0) {
             cfg->num_v = atoi(value);
-        }
-        else if (strcmp(key, ".density") == 0) {
+        } else if (strcmp(key, ".density") == 0) {
             cfg->density = atof(value);
         }
     }
+
     fclose(file);
 }
 
+// Prints the current configuration
 void print_config_file(File_config *cfg) {
     printf("==== CONFIGURATION ====\n");
     printf("Algorithm: %s\n", alg_names[cfg->alg_type]);
@@ -96,20 +92,20 @@ void print_config_file(File_config *cfg) {
     printf("========================\n\n");
 }
 
-// Расчет плотности для ориентированного графа
+// Calculates density for a directed graph
 static U32f density_dir(double density, U32f num_v) {
     return (U32f)(density * num_v * (num_v - 1));
 }
 
-// Расчет плотности для неориентированного графа
+// Calculates density for an undirected graph
 static U32f density_undir(double density, U32f num_v) {
     return (U32f)(density * num_v * (num_v - 1) / 2);
 }
 
-// Создание конфигурации со случайными весами
+// Creates a random graph configuration
 void create_config_random_weights(Config *cfg, U32f num_v, double density,
                                  enum Alg_type alg_type, U32f start_vertex) {
-    // Проверки входных данных
+    // Input validation
     if (num_v == 0) {
         fprintf(stderr, "Vertex count must be greater than 0\n");
         exit(EXIT_FAILURE);
@@ -123,13 +119,13 @@ void create_config_random_weights(Config *cfg, U32f num_v, double density,
         exit(EXIT_FAILURE);
     }
 
-    // Инициализация конфигурации
+    // Initialize configuration
     memset(cfg, 0, sizeof(Config));
     cfg->num_v = num_v;
     cfg->start_vertex = start_vertex;
     cfg->alg_type = alg_type;
 
-    // Определяем тип графа
+    // Determine if the graph is directed
     bool directed = (
         alg_type == DIJKSTRA_LIST ||
         alg_type == DIJKSTRA_MATRIX ||
@@ -138,18 +134,18 @@ void create_config_random_weights(Config *cfg, U32f num_v, double density,
         alg_type == BELMAN_FORD_MATRIX_NO_EDGE_LIST
     );
 
-    // Рассчитываем количество ребер
+    // Calculate number of edges
     U32f target_edges = directed ? density_dir(density, num_v) : density_undir(density, num_v);
     cfg->density = target_edges;
 
-    // Создаем граф
+    // Create base graph
     cfg->graph = create_graph(num_v);
     if (!cfg->graph) {
         fprintf(stderr, "Failed to create graph structure\n");
         exit(EXIT_FAILURE);
     }
 
-    // Генерируем граф
+    // Generate graph with random weights
     if (directed) {
         create_rand_dir_graph(cfg->graph, target_edges, start_vertex);
         set_rand_weights_dir(cfg->graph, 1, MAX_WEIGHT);
@@ -158,36 +154,32 @@ void create_config_random_weights(Config *cfg, U32f num_v, double density,
         set_rand_weights_undir(cfg->graph, 1, MAX_WEIGHT);
     }
 
-    // Создаем матричные представления при необходимости
+    // Create incidence matrix representations if required
     if (alg_type == DIJKSTRA_MATRIX || alg_type == BELMAN_FORD_MATRIX_EDGE_LIST ||
         alg_type == BELMAN_FORD_MATRIX_NO_EDGE_LIST) {
         cfg->inc_matrix_dir = create_inc_dir_matrix(cfg->graph, target_edges);
-    }
-    else if (alg_type == PRIM_MATRIX || alg_type == KRUSKAL_MATRIX) {
+    } else if (alg_type == PRIM_MATRIX || alg_type == KRUSKAL_MATRIX) {
         cfg->inc_matrix_undir = create_inc_undir_matrix(cfg->graph, target_edges);
     }
 }
 
-// Создание конфигурации из существующего графа
+// Creates configuration from an existing graph
 void create_config_from_graph(Config *cfg, enum Alg_type alg_type,
                              U32f num_v, U32f density) {
     cfg->alg_type = alg_type;
     cfg->num_v = num_v;
     cfg->density = density;
 
-    // Создаем матричные представления при необходимости
     if (alg_type == DIJKSTRA_MATRIX || alg_type == BELMAN_FORD_MATRIX_EDGE_LIST ||
         alg_type == BELMAN_FORD_MATRIX_NO_EDGE_LIST) {
         cfg->inc_matrix_dir = create_inc_dir_matrix(cfg->graph, density);
-    }
-    else if (alg_type == PRIM_MATRIX || alg_type == KRUSKAL_MATRIX) {
+    } else if (alg_type == PRIM_MATRIX || alg_type == KRUSKAL_MATRIX) {
         cfg->inc_matrix_undir = create_inc_undir_matrix(cfg->graph, density);
     }
 }
 
-// Освобождение неиспользуемых ресурсов
+// Frees unused parts of the configuration
 void free_unused_config(Config *cfg, enum Alg_type alg_type) {
-    // Для матричных алгоритмов освобождаем граф, если он не нужен
     bool is_matrix_alg = (
         alg_type == DIJKSTRA_MATRIX ||
         alg_type == BELMAN_FORD_MATRIX_EDGE_LIST ||
@@ -202,7 +194,7 @@ void free_unused_config(Config *cfg, enum Alg_type alg_type) {
     }
 }
 
-// Освобождение конфигурации
+// Frees all allocated memory in Config
 void free_config(Config *cfg) {
     if (!cfg) return;
 
@@ -241,7 +233,7 @@ void free_config(Config *cfg) {
     }
 }
 
-// Освобождение конфигурации файла
+// Frees memory used by File_config
 void free_config_file(File_config* cfg) {
     if (!cfg) return;
 

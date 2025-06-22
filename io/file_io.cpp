@@ -16,11 +16,10 @@
 #define BREAK_LINE "--------------------------------\n"
 #define SECTION_LINE "================================\n"
 
-
 #include <filesystem>
 #include "../utils/path_utils.h"
 
-// Универсальная функция загрузки графа
+// Universal function to load a graph from a file
 static void load_graph_file(const char *file_name, Config *cfg, bool directed) {
     std::string resolved_path = resolve_path(file_name);
     printf("Loading graph from: %s\n", resolved_path.c_str());
@@ -60,10 +59,10 @@ static void load_graph_file(const char *file_name, Config *cfg, bool directed) {
     U32f src, dst, weight;
     U32f edge_count = 0;
 
+    // Read edges from file
     while (fscanf(file, "%" SCNuFAST32 " %" SCNuFAST32 " %" SCNuFAST32, &src, &dst, &weight) == 3) {
         if (src >= num_v || dst >= num_v) {
-            fprintf(stderr, "Warning: Skipping invalid edge %u->%u (max vertex %u)\n",
-                    src, dst, num_v-1);
+            fprintf(stderr, "Warning: Skipping invalid edge %u->%u (max vertex %u)\n", src, dst, num_v - 1);
             continue;
         }
 
@@ -82,6 +81,7 @@ static void load_graph_file(const char *file_name, Config *cfg, bool directed) {
     }
 }
 
+// Simple graph loader (doesn't touch Config structure)
 static void load_simple_graph(const char *file_name, Graph** graph, bool directed) {
     FILE *file = fopen(file_name, "r");
     if (!file) {
@@ -111,7 +111,7 @@ static void load_simple_graph(const char *file_name, Graph** graph, bool directe
         }
 
         if (src >= num_v || dst >= num_v) {
-            fprintf(stderr, "Invalid edge: %u -> %u (max vertex %u)\n", src, dst, num_v-1);
+            fprintf(stderr, "Invalid edge: %u -> %u (max vertex %u)\n", src, dst, num_v - 1);
             continue;
         }
 
@@ -124,7 +124,7 @@ static void load_simple_graph(const char *file_name, Graph** graph, bool directe
     fclose(file);
 }
 
-// Обновленная функция загрузки
+// Updated graph loader that stores result into Config
 void load_graph_from_file(const char *file_name, Config *cfg, bool directed) {
     std::string resolved_path = resolve_path(file_name);
     printf("Loading graph from: %s\n", resolved_path.c_str());
@@ -166,8 +166,7 @@ void load_graph_from_file(const char *file_name, Config *cfg, bool directed) {
 
     while (fscanf(file, "%" SCNuFAST32 " %" SCNuFAST32 " %" SCNuFAST32, &src, &dst, &weight) == 3) {
         if (src >= num_v || dst >= num_v) {
-            fprintf(stderr, "Warning: Skipping invalid edge %u->%u (max vertex %u)\n",
-                    src, dst, num_v-1);
+            fprintf(stderr, "Warning: Skipping invalid edge %u->%u (max vertex %u)\n", src, dst, num_v - 1);
             continue;
         }
 
@@ -185,7 +184,8 @@ void load_graph_from_file(const char *file_name, Config *cfg, bool directed) {
         fprintf(stderr, "Warning: Expected %u edges, loaded %u\n", num_e, edge_count);
     }
 }
-// Загрузка неориентированного графа
+
+// Loads an undirected graph into Config
 static void load_undir_graph(const char *file_name, Config* cfg) {
     FILE *file = fopen(file_name, "r");
     if (!file) {
@@ -223,7 +223,7 @@ static void load_undir_graph(const char *file_name, Config* cfg) {
     fclose(file);
 }
 
-// Вывод представлений графа
+// Print graph representations based on config flags
 void print_graph_representation(const Config *cfg, const File_config *cfg_file) {
     if (cfg_file->out_matrix) {
         if (cfg->inc_matrix_dir) {
@@ -245,69 +245,40 @@ void print_graph_representation(const Config *cfg, const File_config *cfg_file) 
     }
 }
 
-// Запуск с случайным графом
+// Run configuration using a randomly generated graph
 void run_config_file_var(File_config *cfg_file, Config *cfg) {
     printf("1. Generate random graph and run algorithm\n");
     printf(BREAK_LINE);
 
-    // Проверка параметров
-    if (cfg_file->num_v == 0) {
-        fprintf(stderr, "Error: Vertex count (num_v) must be specified\n");
-        return;
-    }
-    if (cfg_file->density <= 0) {
-        fprintf(stderr, "Error: Density must be specified and >0\n");
+    if (cfg_file->num_v == 0 || cfg_file->density <= 0) {
+        fprintf(stderr, "Error: Vertex count and density must be specified and non-zero\n");
         return;
     }
 
-    // Создаем конфигурацию со случайными весами
     create_config_random_weights(cfg, cfg_file->num_v, cfg_file->density,
-                                cfg_file->alg_type, cfg_file->start_vertex);
+                                  cfg_file->alg_type, cfg_file->start_vertex);
 
-    // Выводим представления графа
     print_graph_representation(cfg, cfg_file);
-
-    // Освобождаем неиспользуемые ресурсы
     free_unused_config(cfg, cfg->alg_type);
 
-    // Выбираем и выполняем алгоритм
+    // Select and execute algorithm
     switch (cfg->alg_type) {
-        case DIJKSTRA_LIST:
-            dijkstra_list(cfg);
-            break;
-        case DIJKSTRA_MATRIX:
-            dijkstra_matrix(cfg);
-            break;
-        case BELMAN_FORD_LIST:
-            bellman_ford_list(cfg);
-            break;
-        case BELMAN_FORD_MATRIX_EDGE_LIST:
-            bellman_ford_matrix_edge_list(cfg);
-            break;
-        case BELMAN_FORD_MATRIX_NO_EDGE_LIST:
-            bellman_ford_matrix_no_edge_list(cfg);
-            break;
-        case PRIM_LIST:
-            prim_list(cfg);
-            break;
-        case PRIM_MATRIX:
-            prim_matrix(cfg);
-            break;
-        case KRUSKAL_LIST:
-            kruskal_list(cfg);
-            break;
-        case KRUSKAL_MATRIX:
-            kruskal_matrix(cfg);
-            break;
-        default:
-            fprintf(stderr, "Unknown algorithm type\n");
-            break;
+        case DIJKSTRA_LIST: dijkstra_list(cfg); break;
+        case DIJKSTRA_MATRIX: dijkstra_matrix(cfg); break;
+        case BELMAN_FORD_LIST: bellman_ford_list(cfg); break;
+        case BELMAN_FORD_MATRIX_EDGE_LIST: bellman_ford_matrix_edge_list(cfg); break;
+        case BELMAN_FORD_MATRIX_NO_EDGE_LIST: bellman_ford_matrix_no_edge_list(cfg); break;
+        case PRIM_LIST: prim_list(cfg); break;
+        case PRIM_MATRIX: prim_matrix(cfg); break;
+        case KRUSKAL_LIST: kruskal_list(cfg); break;
+        case KRUSKAL_MATRIX: kruskal_matrix(cfg); break;
+        default: fprintf(stderr, "Unknown algorithm type\n"); return;
     }
 
     printf("Results for %s:\n", alg_names[cfg_file->alg_type]);
-    printf("Execution time: %.6f ms\n", cfg->execution_time); // Добавлено
+    printf("Execution time: %.6f ms\n", cfg->execution_time);
 
-    // Вывод результатов в зависимости от типа алгоритма
+    // Output results
     if (cfg->res_sp) {
         printf("Distances:\n");
         for (U32f i = 0; i < cfg->num_v; i++) {
@@ -342,7 +313,7 @@ void run_config_file_var(File_config *cfg_file, Config *cfg) {
     printf(SECTION_LINE);
 }
 
-// Запуск с графом из файла
+// Run configuration using graph loaded from file
 void run_config_file_load(File_config *cfg_file, Config *cfg) {
     printf("2. Load graph from file and run algorithm\n");
     printf(BREAK_LINE);
@@ -352,7 +323,6 @@ void run_config_file_load(File_config *cfg_file, Config *cfg) {
         return;
     }
 
-    // Определяем тип графа на основе алгоритма
     bool directed = (
         cfg_file->alg_type == DIJKSTRA_LIST ||
         cfg_file->alg_type == DIJKSTRA_MATRIX ||
@@ -368,54 +338,29 @@ void run_config_file_load(File_config *cfg_file, Config *cfg) {
         return;
     }
 
-    // Создаем необходимые представления графа
     create_config_from_graph(cfg, cfg_file->alg_type, cfg->num_v, cfg->density);
     print_graph_representation(cfg, cfg_file);
     free_unused_config(cfg, cfg->alg_type);
 
-    Timer timer; // Для замера времени выполнения
+    Timer timer;
 
-    // Выбираем и выполняем алгоритм
+    // Select and execute algorithm
     switch (cfg_file->alg_type) {
-        case DIJKSTRA_LIST:
-            dijkstra_list(cfg);
-            break;
-        case DIJKSTRA_MATRIX:
-            dijkstra_matrix(cfg);
-            break;
-        case BELMAN_FORD_LIST:
-            bellman_ford_list(cfg);
-            break;
-        case BELMAN_FORD_MATRIX_EDGE_LIST:
-            bellman_ford_matrix_edge_list(cfg);
-            break;
-        case BELMAN_FORD_MATRIX_NO_EDGE_LIST:
-            bellman_ford_matrix_no_edge_list(cfg);
-            break;
-        case PRIM_LIST:
-            prim_list(cfg);
-            break;
-        case PRIM_MATRIX:
-            prim_matrix(cfg);
-            break;
-        case KRUSKAL_LIST:
-            kruskal_list(cfg);
-            break;
-        case KRUSKAL_MATRIX:
-            kruskal_matrix(cfg);
-            break;
-        default:
-            fprintf(stderr, "Unknown algorithm type\n");
-            break;
+        case DIJKSTRA_LIST: dijkstra_list(cfg); break;
+        case DIJKSTRA_MATRIX: dijkstra_matrix(cfg); break;
+        case BELMAN_FORD_LIST: bellman_ford_list(cfg); break;
+        case BELMAN_FORD_MATRIX_EDGE_LIST: bellman_ford_matrix_edge_list(cfg); break;
+        case BELMAN_FORD_MATRIX_NO_EDGE_LIST: bellman_ford_matrix_no_edge_list(cfg); break;
+        case PRIM_LIST: prim_list(cfg); break;
+        case PRIM_MATRIX: prim_matrix(cfg); break;
+        case KRUSKAL_LIST: kruskal_list(cfg); break;
+        case KRUSKAL_MATRIX: kruskal_matrix(cfg); break;
+        default: fprintf(stderr, "Unknown algorithm type\n"); return;
     }
 
-    // cfg->execution_time = timer.elapsed(); // Сохраняем время выполнения
-
-    // Вывод результатов
     printf("Results for %s:\n", alg_names[cfg_file->alg_type]);
     printf("Execution time: %.6f ms\n", cfg->execution_time);
 
-    // Вывод кратчайших путей
     if (cfg->res_sp) {
         printf("Distances from vertex %u:\n", cfg->start_vertex);
         for (U32f i = 0; i < cfg->num_v; i++) {
@@ -430,7 +375,6 @@ void run_config_file_load(File_config *cfg_file, Config *cfg) {
         }
     }
 
-    // Вывод MST для Прима
     if (cfg->res_prim) {
         printf("MST (Prim) edges:\n");
         U32f total_weight = 0;
@@ -447,7 +391,6 @@ void run_config_file_load(File_config *cfg_file, Config *cfg) {
         printf("Total MST weight: %u\n", total_weight);
     }
 
-    // Вывод MST для Крускала
     if (cfg->res_kruskal) {
         printf("MST (Kruskal) edges:\n");
         U32f total_weight = 0;
