@@ -1,0 +1,3 @@
+/mnt/c/Users/ilysh/dev_cpp/algorithms-2/build/CMakeFiles/GraphProject.dir
+/mnt/c/Users/ilysh/dev_cpp/algorithms-2/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/ilysh/dev_cpp/algorithms-2/build/CMakeFiles/rebuild_cache.dir

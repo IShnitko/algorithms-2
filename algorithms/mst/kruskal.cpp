@@ -67,7 +67,11 @@ void kruskal_list(Config* cfg) {
 
     // Инициализация результатов
     cfg->res_kruskal = (Res_kruskal*)malloc(sizeof(Res_kruskal));
-    cfg->res_kruskal->edges = (KruskalEdge*)malloc((num_v - 1) * sizeof(KruskalEdge));
+    if (num_v == 0) {
+        fprintf(stderr, "Error: num_v must be greater than 0 for Kruskal's algorithm\n");
+        exit(EXIT_FAILURE);
+    }
+    cfg->res_kruskal->edges = static_cast<KruskalEdge *>(malloc((num_v - 1) * sizeof(KruskalEdge)));
     cfg->res_kruskal->num_edges = 0;
 
     // Замер времени выполнения
