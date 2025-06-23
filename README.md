@@ -26,16 +26,9 @@ This project implements various graph algorithms for Minimum Spanning Tree (MST)
 
 ### Linux/WSL
 ```bash
-git clone https://github.com/yourusername/graph-algorithms.git
-cd graph-algorithms
-cmake -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build -- -j$(nproc)
-```
-
-### Windows
-```cmd
-git clone https://github.com/yourusername/graph-algorithms.git
-cd graph-algorithms
+git clone https://github.com/IShnitko/algorithms-2.git
+cd algorithms-2
+git checkout linux-comapatable
 cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -- -j$(nproc)
 ```
@@ -47,10 +40,7 @@ The program requires a configuration file:
 # Linux/WSL
 ./GraphProject config.txt
 ```
-```bash
-# Windows
-GraphProject.exe config.txt
-```
+
 
 ### Configuration File Format
 Create a `config.txt` file with parameters:
@@ -95,14 +85,7 @@ Example (`graph.txt`):
 3 4 60
 4 0 70
 ```
-
-## Command Line Options
-Run without config file using command-line arguments:
-
-```bash
-./GraphProject --mode=load --file=graph.txt --algorithm=DIJKSTRA_LIST --start_vertex=0
-```
-
+See more examples in [possible configurations](possible_configs.md).
 ## Sample Output
 ```
 ==== CONFIGURATION ====
@@ -157,21 +140,29 @@ graph-algorithms/
 ├── config/
 │   └── configuration.cpp
 ├── graph/
-│   ├── graph.cpp
-│   └── graph.h
+│   ├── configuration.cpp
+│   └── graph.cpp
 ├── io/
 │   ├── file_io.cpp
 │   └── display.cpp
 ├── utils/
 │   ├── timer.h
+│   ├── dsu.cpp
+│   ├── min_heap.cpp
+│   ├── random.cpp
 │   └── path_utils.cpp
+├── config.txt
+├── graph.txt (optional)
+├── CMakeLists.txt
+├── README.md
+├── possible_configs.md
 └── main.cpp
 ```
 
 ## Troubleshooting
 1. **File not found errors**:
     - Use absolute paths in configuration files
-    - Place files in the same directory as the executable
+    - Place files in the root directory
 
 2. **Build errors**:
     - Ensure you have CMake and a compatible C++ compiler installed
