@@ -28,7 +28,7 @@ This project implements various graph algorithms for Minimum Spanning Tree (MST)
 ```bash
 git clone https://github.com/IShnitko/algorithms-2.git
 cd algorithms-2
-git checkout linux-comapatable
+git checkout linux-compatible
 cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -- -j$(nproc)
 ```
