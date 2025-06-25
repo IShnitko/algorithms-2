@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = 
 
-CXX_FLAGS =  -lstdc++fs -O3 -DNDEBUG -std=gnu++17
+CXX_FLAGS =  -lstdc++fs -std=gnu++17
 

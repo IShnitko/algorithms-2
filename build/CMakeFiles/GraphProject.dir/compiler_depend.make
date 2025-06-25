@@ -47,21 +47,12 @@ CMakeFiles/GraphProject.dir/algorithms/mst/kruskal.cpp.o: /mnt/c/Users/ilysh/dev
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
-  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
-  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
@@ -160,21 +151,12 @@ CMakeFiles/GraphProject.dir/algorithms/mst/prim.cpp.o: /mnt/c/Users/ilysh/dev_cp
   /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
-  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
-  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
@@ -276,21 +258,12 @@ CMakeFiles/GraphProject.dir/algorithms/sp/bellman_ford.cpp.o: /mnt/c/Users/ilysh
   /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
-  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
-  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
@@ -394,21 +367,12 @@ CMakeFiles/GraphProject.dir/algorithms/sp/dijkstra.cpp.o: /mnt/c/Users/ilysh/dev
   /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
-  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
-  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
@@ -590,22 +554,13 @@ CMakeFiles/GraphProject.dir/config/configuration.cpp.o: /mnt/c/Users/ilysh/dev_c
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
   /usr/include/x86_64-linux-gnu/bits/sched.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/setjmp.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
-  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
-  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
@@ -643,8 +598,6 @@ CMakeFiles/GraphProject.dir/config/configuration.cpp.o: /mnt/c/Users/ilysh/dev_c
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar2.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/atomic_word.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h \
@@ -742,19 +695,12 @@ CMakeFiles/GraphProject.dir/graph/generators.cpp.o: /mnt/c/Users/ilysh/dev_cpp/a
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
@@ -826,19 +772,12 @@ CMakeFiles/GraphProject.dir/graph/graph.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algori
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
@@ -896,9 +835,6 @@ CMakeFiles/GraphProject.dir/io/display.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algorit
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
   /usr/include/x86_64-linux-gnu/bits/time64.h \
   /usr/include/x86_64-linux-gnu/bits/timesize.h \
@@ -1104,22 +1040,13 @@ CMakeFiles/GraphProject.dir/io/file_io.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algorit
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
   /usr/include/x86_64-linux-gnu/bits/sched.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/setjmp.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
-  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
-  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
@@ -1155,14 +1082,10 @@ CMakeFiles/GraphProject.dir/io/file_io.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algorit
   /usr/include/x86_64-linux-gnu/bits/typesizes.h \
   /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
   /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/unistd-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/unistd.h \
   /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar2.h \
   /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
   /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
@@ -1316,24 +1239,15 @@ CMakeFiles/GraphProject.dir/main.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algorithms-2/
   /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/stat.h \
   /usr/include/x86_64-linux-gnu/bits/statx-generic.h \
   /usr/include/x86_64-linux-gnu/bits/statx.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
-  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
-  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/struct_stat.h \
@@ -1369,14 +1283,10 @@ CMakeFiles/GraphProject.dir/main.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algorithms-2/
   /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
   /usr/include/x86_64-linux-gnu/bits/typesizes.h \
   /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
-  /usr/include/x86_64-linux-gnu/bits/unistd-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/unistd.h \
   /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar2.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
@@ -1416,15 +1326,11 @@ CMakeFiles/GraphProject.dir/utils/dsu.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algorith
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
@@ -1488,15 +1394,11 @@ CMakeFiles/GraphProject.dir/utils/min_heap.cpp.o: /mnt/c/Users/ilysh/dev_cpp/alg
   /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
@@ -1699,20 +1601,13 @@ CMakeFiles/GraphProject.dir/utils/path_utils.cpp.o: /mnt/c/Users/ilysh/dev_cpp/a
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
   /usr/include/x86_64-linux-gnu/bits/sched.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/setjmp.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
@@ -1748,14 +1643,10 @@ CMakeFiles/GraphProject.dir/utils/path_utils.cpp.o: /mnt/c/Users/ilysh/dev_cpp/a
   /usr/include/x86_64-linux-gnu/bits/typesizes.h \
   /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
   /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/unistd-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/unistd.h \
   /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar2.h \
   /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
   /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
@@ -1809,15 +1700,11 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
@@ -1896,10 +1783,6 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
 
-/usr/include/x86_64-linux-gnu/bits/unistd.h:
-
-/usr/include/x86_64-linux-gnu/bits/unistd-decl.h:
-
 /usr/include/x86_64-linux-gnu/bits/getopt_core.h:
 
 /usr/include/x86_64-linux-gnu/bits/statx.h:
@@ -1916,21 +1799,9 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/c++/13/istream:
 
-/usr/include/c++/13/filesystem:
+/usr/include/c++/13/bits/alloc_traits.h:
 
-/usr/include/c++/13/ext/concurrence.h:
-
-/usr/include/c++/13/ext/aligned_buffer.h:
-
-/usr/include/x86_64-linux-gnu/asm/posix_types.h:
-
-/usr/include/c++/13/cwctype:
-
-/usr/include/c++/13/codecvt:
-
-/usr/include/c++/13/bits/sstream.tcc:
-
-/usr/include/c++/13/bits/shared_ptr.h:
+/usr/include/c++/13/bits/concept_check.h:
 
 /mnt/c/Users/ilysh/dev_cpp/algorithms-2/algorithms/sp/dijkstra.h:
 
@@ -1958,8 +1829,6 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/c++/13/climits:
 
-/usr/include/x86_64-linux-gnu/bits/wchar2.h:
-
 /mnt/c/Users/ilysh/dev_cpp/algorithms-2/graph/generators.h:
 
 /usr/include/c++/13/cstring:
@@ -1970,7 +1839,21 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h:
 
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+/mnt/c/Users/ilysh/dev_cpp/algorithms-2/algorithms/sp/bellman_ford.h:
+
+/usr/include/c++/13/bits/allocator.h:
+
+/mnt/c/Users/ilysh/dev_cpp/algorithms-2/utils/random.h:
+
+/usr/include/c++/13/bits/stl_bvector.h:
+
 /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h:
+
+/usr/include/linux/posix_types.h:
+
+/usr/include/c++/13/bits/ptr_traits.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++locale.h:
 
@@ -1979,6 +1862,10 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 /mnt/c/Users/ilysh/dev_cpp/algorithms-2/algorithms/sp/dijkstra.cpp:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h:
+
+/usr/include/c++/13/bits/char_traits.h:
 
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
@@ -1989,8 +1876,6 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 /mnt/c/Users/ilysh/dev_cpp/algorithms-2/utils/random.cpp:
 
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdlib.h:
 
 /usr/include/x86_64-linux-gnu/asm/errno.h:
 
@@ -2008,6 +1893,10 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
 
+/mnt/c/Users/ilysh/dev_cpp/algorithms-2/utils/path_utils.h:
+
+/usr/include/c++/13/backward/binders.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
@@ -2020,49 +1909,23 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
 
-/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h:
-
-/usr/include/c++/13/bits/char_traits.h:
-
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
 
-/mnt/c/Users/ilysh/dev_cpp/algorithms-2/algorithms/sp/bellman_ford.h:
+/mnt/c/Users/ilysh/dev_cpp/algorithms-2/config/configuration.cpp:
 
-/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+/mnt/c/Users/ilysh/dev_cpp/algorithms-2/utils/timer.h:
 
-/usr/include/asm-generic/types.h:
+/usr/include/x86_64-linux-gnu/bits/byteswap.h:
 
-/usr/include/asm-generic/bitsperlong.h:
+/usr/include/c++/13/ext/atomicity.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
+/usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
 
-/usr/include/x86_64-linux-gnu/bits/time64.h:
+/usr/include/x86_64-linux-gnu/bits/types/FILE.h:
 
-/usr/include/c++/13/bits/basic_ios.h:
+/usr/include/x86_64-linux-gnu/bits/timex.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h:
-
-/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
-
-/usr/include/c++/13/iomanip:
-
-/usr/include/strings.h:
-
-/usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
-
-/usr/include/x86_64-linux-gnu/bits/strings_fortified.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-least.h:
-
-/usr/include/c++/13/cerrno:
-
-/usr/include/c++/13/bits/unique_ptr.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
+/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
@@ -2074,6 +1937,8 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/c++/13/new:
 
+/usr/include/c++/13/bits/basic_string.tcc:
+
 /usr/include/c++/13/type_traits:
 
 /usr/include/x86_64-linux-gnu/sys/single_threaded.h:
@@ -2082,15 +1947,9 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h:
 
-/usr/include/x86_64-linux-gnu/bits/types.h:
-
 /usr/include/c++/13/bits/cpp_type_traits.h:
 
-/usr/include/c++/13/bits/range_access.h:
-
-/usr/include/c++/13/system_error:
-
-/usr/include/c++/13/pstl/pstl_config.h:
+/usr/include/x86_64-linux-gnu/bits/types.h:
 
 /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
 
@@ -2110,11 +1969,21 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/c++/13/cstdlib:
 
-/usr/include/x86_64-linux-gnu/bits/string_fortified.h:
+/usr/include/c++/13/pstl/pstl_config.h:
 
 /usr/include/c++/13/ctime:
 
+/usr/include/c++/13/codecvt:
+
 /usr/include/c++/13/stdlib.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h:
+
+/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
 
@@ -2128,11 +1997,11 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/c++/13/bits/chrono.h:
 
-/usr/include/linux/limits.h:
+/usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
-/usr/include/c++/13/ratio:
+/mnt/c/Users/ilysh/dev_cpp/algorithms-2/algorithms/mst/prim.h:
 
-/usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
 
 /mnt/c/Users/ilysh/dev_cpp/algorithms-2/algorithms/mst/kruskal.h:
 
@@ -2144,11 +2013,19 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/alloca.h:
 
-/usr/include/c++/13/ios:
+/usr/include/asm-generic/types.h:
 
-/mnt/c/Users/ilysh/dev_cpp/algorithms-2/config/configuration.h:
+/usr/include/asm-generic/bitsperlong.h:
 
-/usr/include/x86_64-linux-gnu/bits/waitflags.h:
+/usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/time64.h:
+
+/usr/include/c++/13/bits/basic_ios.h:
+
+/usr/include/c++/13/bits/range_access.h:
+
+/usr/include/c++/13/system_error:
 
 /usr/include/c++/13/bits/parse_numbers.h:
 
@@ -2158,11 +2035,9 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/c++/13/bits/uses_allocator.h:
 
-/usr/include/x86_64-linux-gnu/bits/select-decl.h:
+/usr/include/strings.h:
 
-/usr/include/c++/13/debug/assertions.h:
-
-/mnt/c/Users/ilysh/dev_cpp/algorithms-2/graph/generators.cpp:
+/usr/include/c++/13/iomanip:
 
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
@@ -2186,17 +2061,9 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/c++/13/bits/locale_facets.tcc:
 
-/mnt/c/Users/ilysh/dev_cpp/algorithms-2/utils/timer.h:
-
-/usr/include/x86_64-linux-gnu/bits/byteswap.h:
-
-/mnt/c/Users/ilysh/dev_cpp/algorithms-2/config/configuration.cpp:
-
 /usr/include/stdlib.h:
 
 /usr/include/string.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdio.h:
 
 /mnt/c/Users/ilysh/dev_cpp/algorithms-2/graph/graph.h:
 
@@ -2210,11 +2077,17 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/c++/13/bits/fs_fwd.h:
 
-/usr/include/x86_64-linux-gnu/bits/timex.h:
+/usr/include/linux/limits.h:
 
-/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
+/usr/include/c++/13/ratio:
 
-/usr/include/x86_64-linux-gnu/bits/types/FILE.h:
+/usr/include/c++/13/bits/sstream.tcc:
+
+/usr/include/x86_64-linux-gnu/asm/posix_types.h:
+
+/usr/include/c++/13/cwctype:
+
+/usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
 
 /usr/include/c++/13/bits/charconv.h:
 
@@ -2228,47 +2101,25 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/locale.h:
 
-/mnt/c/Users/ilysh/dev_cpp/algorithms-2/utils/random.h:
+/usr/include/c++/13/ext/aligned_buffer.h:
 
-/usr/include/c++/13/bits/allocator.h:
+/usr/include/x86_64-linux-gnu/bits/stdint-least.h:
 
-/usr/include/c++/13/bits/stl_bvector.h:
+/usr/include/c++/13/cerrno:
 
-/usr/include/x86_64-linux-gnu/bits/time.h:
+/usr/include/c++/13/bits/unique_ptr.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/select.h:
 
-/usr/include/x86_64-linux-gnu/bits/select2.h:
-
-/usr/include/c++/13/bits/streambuf.tcc:
-
-/mnt/c/Users/ilysh/dev_cpp/algorithms-2/io/file_io.h:
-
-/usr/include/linux/posix_types.h:
-
-/usr/include/c++/13/bits/ptr_traits.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdio2-decl.h:
-
-/usr/include/c++/13/ext/atomicity.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
-
-/mnt/c/Users/ilysh/dev_cpp/algorithms-2/algorithms/mst/prim.h:
-
-/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
+/usr/include/x86_64-linux-gnu/bits/time.h:
 
 /usr/include/stdc-predef.h:
 
-/mnt/c/Users/ilysh/dev_cpp/algorithms-2/utils/path_utils.h:
+/usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
 
-/usr/include/c++/13/backward/binders.h:
-
-/usr/include/c++/13/bits/basic_string.tcc:
-
-/usr/include/c++/13/bits/alloc_traits.h:
-
-/usr/include/c++/13/bits/concept_check.h:
+/usr/include/c++/13/bits/shared_ptr.h:
 
 /usr/include/c++/13/bits/cxxabi_forced.h:
 
@@ -2303,10 +2154,6 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 /usr/include/c++/13/streambuf:
 
 /usr/include/c++/13/bits/memory_resource.h:
-
-/usr/include/c++/13/bits/shared_ptr_base.h:
-
-/usr/include/wchar.h:
 
 /usr/include/c++/13/bits/move.h:
 
@@ -2358,6 +2205,10 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/c++/13/cwchar:
 
+/usr/include/c++/13/debug/assertions.h:
+
+/mnt/c/Users/ilysh/dev_cpp/algorithms-2/graph/generators.cpp:
+
 /usr/include/linux/errno.h:
 
 /usr/include/c++/13/debug/debug.h:
@@ -2373,8 +2224,6 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 /usr/include/limits.h:
 
 /usr/include/c++/13/initializer_list:
-
-/usr/include/x86_64-linux-gnu/bits/wchar2-decl.h:
 
 /usr/include/c++/13/bits/ios_base.h:
 
@@ -2424,13 +2273,13 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h:
 
-/usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h:
-
 /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
 
 /usr/include/asm-generic/errno.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
+
+/usr/include/c++/13/filesystem:
 
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
@@ -2458,11 +2307,15 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/c++/13/vector:
 
-/usr/include/asm-generic/errno-base.h:
-
 /usr/include/c++/13/bits/stl_iterator_base_funcs.h:
 
+/usr/include/asm-generic/errno-base.h:
+
 /mnt/c/Users/ilysh/dev_cpp/algorithms-2/io/display.cpp:
+
+/usr/include/c++/13/bits/streambuf.tcc:
+
+/mnt/c/Users/ilysh/dev_cpp/algorithms-2/io/file_io.h:
 
 /usr/include/c++/13/bits/codecvt.h:
 
@@ -2480,6 +2333,14 @@ CMakeFiles/GraphProject.dir/utils/random.cpp.o: /mnt/c/Users/ilysh/dev_cpp/algor
 
 /usr/include/c++/13/bits/ostream.tcc:
 
-/usr/include/x86_64-linux-gnu/bits/stdio2.h:
-
 /usr/include/c++/13/bits/quoted_string.h:
+
+/usr/include/wchar.h:
+
+/usr/include/c++/13/bits/shared_ptr_base.h:
+
+/usr/include/c++/13/ext/concurrence.h:
+
+/mnt/c/Users/ilysh/dev_cpp/algorithms-2/config/configuration.h:
+
+/usr/include/c++/13/ios:

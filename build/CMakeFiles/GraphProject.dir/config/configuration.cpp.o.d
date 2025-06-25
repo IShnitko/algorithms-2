@@ -31,10 +31,7 @@ CMakeFiles/GraphProject.dir/config/configuration.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
  /usr/include/x86_64-linux-gnu/bits/floatn.h \
  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
- /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h \
- /usr/include/x86_64-linux-gnu/bits/stdio.h \
- /usr/include/x86_64-linux-gnu/bits/stdio2.h /usr/include/c++/13/stdlib.h \
- /usr/include/c++/13/cstdlib \
+ /usr/include/c++/13/stdlib.h /usr/include/c++/13/cstdlib \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h \
@@ -58,21 +55,15 @@ CMakeFiles/GraphProject.dir/config/configuration.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
- /usr/include/x86_64-linux-gnu/bits/select2.h \
- /usr/include/x86_64-linux-gnu/bits/select-decl.h \
  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
  /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
  /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
  /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h /usr/include/alloca.h \
- /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
- /usr/include/x86_64-linux-gnu/bits/stdlib.h \
  /usr/include/c++/13/bits/std_abs.h /usr/include/string.h \
  /usr/include/strings.h \
- /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
- /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
  /mnt/c/Users/ilysh/dev_cpp/algorithms-2/config/../graph/graph.h \
  /mnt/c/Users/ilysh/dev_cpp/algorithms-2/config/../graph/generators.h \
  /mnt/c/Users/ilysh/dev_cpp/algorithms-2/config/../graph/graph.h \
@@ -86,8 +77,6 @@ CMakeFiles/GraphProject.dir/config/configuration.cpp.o: \
  /usr/include/c++/13/bits/postypes.h /usr/include/c++/13/cwchar \
  /usr/include/wchar.h /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
- /usr/include/x86_64-linux-gnu/bits/wchar2-decl.h \
- /usr/include/x86_64-linux-gnu/bits/wchar2.h \
  /usr/include/c++/13/type_traits /usr/include/c++/13/bits/allocator.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h \
  /usr/include/c++/13/bits/new_allocator.h /usr/include/c++/13/new \
